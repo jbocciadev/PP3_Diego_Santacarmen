@@ -1,5 +1,17 @@
 import os, time
 
+
+"""
+1_Create a city class with template for creating the different city elements
+2_randomly select a city as the victim
+3_randomly select a second city as the hiding place
+4_randomly select another 4 cities where there will be clues
+5_create a list of places visited so the user can fly back
+6_create a list of clues collected along the way so the user can consult at any point in the game
+7_create presentation screens for the different cities using the ASCII art and description from city object
+"""
+
+
 def clear():
     """
     Clears the terminal. See https://stackoverflow.com/questions/517970/how-to-clear-the-interpreter-console
