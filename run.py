@@ -1,4 +1,4 @@
-import os, time
+import os, time, csv
 
 
 """
@@ -35,4 +35,11 @@ def main():
     run_game()
 
 
-main()
+#main()
+
+with open("cities.csv", encoding='cp1252') as cities_file:
+    cities = csv.reader(cities_file, delimiter=",")
+    c_list = []
+    for city in cities:
+        c_list.append(city)
+    print(c_list[0])
