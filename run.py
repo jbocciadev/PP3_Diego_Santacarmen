@@ -1,11 +1,11 @@
-import os, time, csv
+import os, time, csv, cursor, colorama
 from random import shuffle, randint, choice
 from pprint import pprint
 
 
 """
-1_Create a city class with template for creating the different city elements
-2_randomly select a city as the victim
+1_Create a city class with template for creating the different city elements                                    - NOT NECESSARY
+2_randomly select a city as the victim                                                                          - DONE
 3_randomly select a second city as the hiding place
 4_randomly select another 4 cities where there will be clues
 5_create a list of places visited so the user can fly back
@@ -31,29 +31,42 @@ def load_cities():
     return c_list
 
         
-    #victim = c_list
 def select_victim():
     shuffle(cities)
     victim = cities.pop()
     return victim
 
+def travel():
+    loading = "."
+    for i in range(5):
+        print(loading)
+        loading += '.'
+        time.sleep(1)
+        clear()
+
 #Main function definition---------------------------------------------------
 
 def main():
-    global cities 
+    global cities, visited, clues
     cities = load_cities()
+    visited, clues = [], []
     victim = select_victim()
     victim_location = f"{victim['Name']}, {victim['Country']}"
     stolen = choice(victim['Item'])
     
-
     user = input(f"Identify yourself, agent!\nWhat is your name?\n")
+    
     clear()
+    cursor.hide()
     print(f"Agent {user}, we have received a report from {victim_location} that {stolen} has been stolen.")
     time.sleep(3)
     print(f"You have 24 hours to catch the culprit.")
     time.sleep(2)
     print(f"Head over to the crime scene to begin your investigation, and good luck!")
+    time.sleep(3)
+    clear()
+
+    travel()
 
 
 
