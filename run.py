@@ -1,4 +1,6 @@
 import os, time, csv
+from random import shuffle, randint, choice
+from pprint import pprint
 
 
 """
@@ -18,10 +20,32 @@ def clear():
     """
     os.system("clear")
 
+def load_cities():
+    with open("cities.csv", encoding='utf-8-sig') as cities_file:
+        cities = csv.DictReader(cities_file, delimiter=',')
+        c_list = []
+        for city in cities:
+            city["Landmarks"] = city["Landmarks"].split(",")
+            city["Item"] = city["Item"].split(",")
+            c_list.append(city)
+    return c_list
 
-def run_game():
-    stolen = "The FIFA world cup trophy"
-    victim_location = "Buenos Aires, Argentina"
+        
+    #victim = c_list
+def select_victim():
+    shuffle(cities)
+    victim = cities.pop()
+    return victim
+
+#Main function definition---------------------------------------------------
+
+def main():
+    global cities 
+    cities = load_cities()
+    victim = select_victim()
+    victim_location = f"{victim['Name']}, {victim['Country']}"
+    stolen = choice(victim['Item'])
+    
 
     user = input(f"Identify yourself, agent!\nWhat is your name?\n")
     clear()
@@ -31,15 +55,6 @@ def run_game():
     time.sleep(2)
     print(f"Head over to the crime scene to begin your investigation, and good luck!")
 
-def main():
-    run_game()
 
 
-#main()
-
-with open("cities.csv", encoding='cp1252') as cities_file:
-    cities = csv.reader(cities_file, delimiter=",")
-    c_list = []
-    for city in cities:
-        c_list.append(city)
-    print(c_list[0])
+main()
