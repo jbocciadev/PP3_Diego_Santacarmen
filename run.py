@@ -44,6 +44,22 @@ def travel():
         time.sleep(1)
         clear()
 
+def t_print(message):
+    for char in message:
+        time.sleep(0.05)
+        print(char, end='', flush=True)
+
+def intro_sequence(user,victim_location,stolen):
+    clear()
+    t_print(f"Agent {user}, we have received a report from {victim_location} that {stolen} has been stolen.\n")
+    time.sleep(1.5)
+    t_print(f"You have 24 hours to catch the culprit.\n")
+    time.sleep(1.5)
+    t_print(f"Head over to the crime scene to begin your investigation, and good luck!\n")
+    cursor.hide()
+    time.sleep(1.5)
+    clear()
+
 #Main function definition---------------------------------------------------
 
 def main():
@@ -53,20 +69,13 @@ def main():
     victim = select_victim()
     victim_location = f"{victim['Name']}, {victim['Country']}"
     stolen = choice(victim['Item'])
-    
     user = input(f"Identify yourself, agent!\nWhat is your name?\n")
     
-    clear()
+    intro_sequence(user,victim_location,stolen)
+    
     cursor.hide()
-    print(f"Agent {user}, we have received a report from {victim_location} that {stolen} has been stolen.")
-    time.sleep(3)
-    print(f"You have 24 hours to catch the culprit.")
-    time.sleep(2)
-    print(f"Head over to the crime scene to begin your investigation, and good luck!")
-    time.sleep(3)
-    clear()
-
     travel()
+    cursor.show()
 
 
 
