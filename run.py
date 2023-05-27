@@ -60,21 +60,70 @@ def intro_sequence(user,victim_location,stolen):
     time.sleep(1.5)
     clear()
 
+def display_destination(destination):
+    cursor.show()
+    t_print(f"Welcome to {destination['Name']}, {destination['Country']}\n")
+
+def location_options():
+    options = ["Learn more about this place.","Interrogate witnesses.","View my clues.","Travel."]
+    t_print(f"What do you want to do next, agent {agent}\n?")
+    for i in range(len(options)):
+        print(f"{i+1}_ {options[i]}")
+    cursor.show()
+    selection = input()
+    ############################################   CONTINUE HERE   #############################
+
+'''
+def interrogation_options():
+
+
+def travel_options():
+
+
+def learn_more():
+
+
+def view_clues():
+
+
+'''
+
 #Main function definition---------------------------------------------------
 
 def main():
-    global cities, visited, clues
+    global cities, visited, clues, victim, agent
     cities = load_cities()
     visited, clues = [], []
     victim = select_victim()
     victim_location = f"{victim['Name']}, {victim['Country']}"
     stolen = choice(victim['Item'])
-    user = input(f"Identify yourself, agent!\nWhat is your name?\n")
+    finished = False
+    agent = input(f"Identify yourself, agent!\nWhat is your name?\n")
     
-    intro_sequence(user,victim_location,stolen)
-    
+    intro_sequence(agent,victim_location,stolen)    
     cursor.hide()
     travel()
+    current_location = victim
+    display_destination(victim)
+    at_destination = True
+    location_options()
+
+        
+    
+    #display destination
+
+
+
+
+
+
+
+
+
+
+
+
+
     cursor.show()
 
 
