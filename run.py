@@ -40,10 +40,21 @@ def select_thief():
 
 def generate_thief_clues(thief):
     clues = []
+    feature = thief["Feature"]
+    profession = thief["Profession"]
+    eyes = thief["Eyes"]
     if thief["Gender"] == "male":
-        print("thief is a man")
+        pron = "he"
     else:
-        print("thief is a woman")
+        pron = "she"
+    clues.append(f"{pron} had {thief['Hair']} hair.")
+    
+    print(feature)
+    if feature[0] == "a":
+        clues.append(f"I saw {pron} had {feature}.")
+    else:
+        clues.append(f"I figured {pron} {feature}.")
+    print(clues)
     time.sleep(5)
 
 def travel():    
