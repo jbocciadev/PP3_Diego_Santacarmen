@@ -16,6 +16,7 @@ def load_cities():
         for city in cities:
             city["Landmarks"] = city["Landmarks"].split(",")
             city["Item"] = city["Item"].split(",")
+            city["Clues_in"] = city["Clues_in"].split(",")
             c_list.append(city)
     return c_list
 
@@ -35,16 +36,15 @@ def select_victim():
 
 def create_escape_route():
     route = [victim["Name"]]
-    print(route)
     for i in range(len(cities)):
         if cities[i]["Name"] not in route:
             route.append(cities[i]["Name"])
             cities[i-1]["Clues_out"] = cities[i]["Clues_in"]
-            print(cities[i-1]["Clues_out"])
-            print(route)
-            time.sleep(1)
+            cities[i-1]["Clues_out"].append(thief_clues.pop())
+            cities[i-1]["Previous"] = cities[i]["Name"]
         else:
             continue
+    return route
 
 def select_thief():
     shuffle(suspects)
@@ -56,6 +56,7 @@ def generate_thief_clues(thief):
     feature = thief["Feature"]
     profession = thief["Profession"]
     eyes = thief["Eyes"]
+    global pron
     if thief["Gender"] == "male":
         pron = "he"
     else:
@@ -134,6 +135,9 @@ def interrogation_places():
     while x == True:
         t_print("Select where you want to speak to the witnesses:\n")
         time.sleep(0.5)
+        give_clues = False
+        if current_location["Previous"] in visited or len(visited) == 1:
+            give_clues = True
         options = current_location["Landmarks"]
         for i in range(len(options)):
             print(f"{i+1}_ {options[i]}")
@@ -147,32 +151,54 @@ def interrogation_places():
             continue
         elif selection == "R" or selection == "r":
             return
+        elif give_clues == False:
+            clear()
+            print(choice(no_clue))
+            input("Press Enter to continue... ")
+        elif selection == "1":
+            clear()
+            s = int(selection)-1
+            print(current_location["Clues_out"][s])
+            clues.add(current_location["Clues_out"][s])        
+            input("Press Enter to continue... ")
+        elif selection == "2":
+            clear()
+            s = int(selection)-1
+            print(current_location["Clues_out"][s])
+            clues.add(current_location["Clues_out"][s])        
+            input("Press Enter to continue... ")
+        elif selection == "3":
+            clear()
+            s = int(selection)-1
+            print(current_location["Clues_out"][s])
+            clues.add(current_location["Clues_out"][s])        
+            input("Press Enter to continue... ")
         else:
             print(f"Selection = {selection}")
             exit()
 
     
-    pass
+    #pass
     ############################################   CONTINUE HERE   #############################
 
 
 #Main function definition---------------------------------------------------
 
 def main():
-    global cities, suspects, visited, clues, victim, agent, current_location, finished, p
+    global cities, suspects, visited, clues, victim, agent, current_location, finished, p, thief_clues, no_clue
     finished = False
     p = 0 #p is the variable that controls the flow of the game. It tells the system which screen to load next in the while if-else loop.
     cities = load_cities()
     suspects = load_suspects()
     thief = select_thief()
     thief_clues = generate_thief_clues(thief)
-
-    visited, clues = [], []
+    no_clue = ["I don't think I have seen anyone with that description.",
+    "I'm sorry agent, but that doesn't ring a bell at all!","I can't help you, sorry!","Have you seen my cat? He is orange and wears a black collar","One potato, two potatoes"]
+    visited, clues = set(), set()
     victim = select_victim()
-    visited.append(victim["Name"])
+    visited.add(victim["Name"])
     escape_route = create_escape_route()
     print(escape_route)
-    
     victim_location = f"{victim['Name']}, {victim['Country']}"
     stolen = choice(victim['Item'])
     finished = False
