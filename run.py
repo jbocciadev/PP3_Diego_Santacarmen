@@ -1,7 +1,5 @@
 import os, time, csv, cursor, colorama
 from random import shuffle, randint, choice
-from pprint import pprint
-
 
 
 
@@ -27,14 +25,14 @@ def select_victim():
     victim = cities.pop()
     return victim
 
-def travel():
-    cursor.hide()
+def travel():    
     loading = "."
     for i in range(5):
         print(loading)
         loading += '.'
         time.sleep(1)
         clear()
+        cursor.hide()
 
 def t_print(message):
     for char in message:
@@ -48,8 +46,8 @@ def intro_sequence(user,victim_location,stolen):
     t_print(f"You have 24 hours to catch the culprit.\n")
     time.sleep(1.5)
     t_print(f"Head over to the crime scene to begin your investigation, and good luck!\n")
+    input("Press Enter to continue... ")
     cursor.hide()
-    time.sleep(1)
     clear()
 
 def display_destination(destination):
@@ -89,15 +87,17 @@ def interrogation_places():
     
     x = True
     while x == True:
-        tprint("Select where you want to speak to the witnesses")
+        t_print("Select where you want to speak to the witnesses:\n")
+        time.sleep(0.5)
         options = current_location["Landmarks"]
         for i in range(len(options)):
-            tprint(f"{i+1}_ {options[i]}")
-        tprint("R_ Return to previous screen.")
+            print(f"{i+1}_ {options[i]}")
+        print("R_ Return to previous screen.")
 
-        valid_selections = ["1", "2","3","R","r"]        
+        valid_selections = ["1","2","3","R","r"]        
         selection = input()
         if selection not in valid_selections:
+            clear()
             print(f"You have selected {selection}. This is not a valid option. Please, select a valid option:")
             continue
         elif selection == "R" or selection == "r":
@@ -141,7 +141,7 @@ def main():
             destination_options()
         elif p == 1:
             print(f"{current_location['Description']}\n \n")
-            time.sleep(5)
+            input("Press Enter to go back to the main screen... ")
             p = 0
             clear()
         elif p == 2:
