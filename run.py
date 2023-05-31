@@ -47,15 +47,15 @@ def generate_thief_clues(thief):
         pron = "he"
     else:
         pron = "she"
-    clues.append(f"{pron} had {thief['Hair']} hair.")
-    
-    print(feature)
+    clues.append(f"I saw the thief! {pron.capitalize()} had {thief['Hair']} hair.")    
     if feature[0] == "a":
         clues.append(f"I saw {pron} had {feature}.")
     else:
         clues.append(f"I figured {pron} {feature}.")
-    print(clues)
-    time.sleep(5)
+    clues.append(f"Judging by the way {pron} was talking, I'm sure {pron} would have been a {profession}, or something similar.")
+    clues.append(f"The person you are looking for has {eyes} eyes.")
+    shuffle(clues)
+    return clues
 
 def travel():    
     loading = "."
@@ -153,6 +153,7 @@ def main():
     suspects = load_suspects()
     thief = select_thief()
     thief_clues = generate_thief_clues(thief)
+    print(thief_clues)
 
     time.sleep(5)
 
