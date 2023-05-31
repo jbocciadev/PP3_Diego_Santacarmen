@@ -61,7 +61,7 @@ def destination_options():
     Display main screen for the current location's options available to the player.
     Handles the user's selection and passes on to the next iteration of the outer loop having modified the value of var "p".
     """
-    options = ["Learn more about this place.","Interrogate witnesses.","View my clues.","Travel."]
+    options = ["Learn more about this place.","Interrogate witnesses.","View my clues.","View my suspects.","Travel."]
     t_print(f"What do you want to do next, agent {agent}?\n\n")
     for i in range(len(options)):
         print(f"{i+1}_ {options[i]}")
@@ -75,10 +75,38 @@ def destination_options():
         p = 1
     elif int(selection) == 2:
         p = 2
+    elif int(selection) == 3:
+        p = 3
+    elif int(selection) == 4:
+        p = 4
+    elif int(selection) == 5:
+        p = 5
     else:
         pass
 
+
 def interrogation_places():
+    
+    x = True
+    while x == True:
+        tprint("Select where you want to speak to the witnesses")
+        options = current_location["Landmarks"]
+        for i in range(len(options)):
+            tprint(f"{i+1}_ {options[i]}")
+        tprint("R_ Return to previous screen.")
+
+        valid_selections = ["1", "2","3","R","r"]        
+        selection = input()
+        if selection not in valid_selections:
+            print(f"You have selected {selection}. This is not a valid option. Please, select a valid option:")
+            continue
+        elif selection == "R" or selection == "r":
+            return
+        else:
+            print(f"Selection = {selection}")
+            exit()
+
+    
     pass
     ############################################   CONTINUE HERE   #############################
 
@@ -109,7 +137,7 @@ def main():
     while finished == False:
         if p == 0:
             display_destination(current_location)
-            time.sleep(1.5)
+            time.sleep(0.5)
             destination_options()
         elif p == 1:
             print(f"{current_location['Description']}\n \n")
