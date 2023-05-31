@@ -30,8 +30,21 @@ def load_suspects():
         
 def select_victim():
     shuffle(cities)
-    victim = cities.pop()
+    victim = cities[0]
     return victim
+
+def create_escape_route():
+    route = [victim["Name"]]
+    print(route)
+    for i in range(len(cities)):
+        if cities[i]["Name"] not in route:
+            route.append(cities[i]["Name"])
+            cities[i-1]["Clues_out"] = cities[i]["Clues_in"]
+            print(cities[i-1]["Clues_out"])
+            print(route)
+            time.sleep(1)
+        else:
+            continue
 
 def select_thief():
     shuffle(suspects)
@@ -148,21 +161,22 @@ def interrogation_places():
 def main():
     global cities, suspects, visited, clues, victim, agent, current_location, finished, p
     finished = False
-    p = 0
+    p = 0 #p is the variable that controls the flow of the game. It tells the system which screen to load next in the while if-else loop.
     cities = load_cities()
     suspects = load_suspects()
     thief = select_thief()
     thief_clues = generate_thief_clues(thief)
-    print(thief_clues)
-
-    time.sleep(5)
 
     visited, clues = [], []
     victim = select_victim()
+    visited.append(victim["Name"])
+    escape_route = create_escape_route()
+    print(escape_route)
+    
     victim_location = f"{victim['Name']}, {victim['Country']}"
     stolen = choice(victim['Item'])
     finished = False
-    clear()
+#    clear()
 
     agent = input(f"Identify yourself, agent!\nWhat is your name?\n")    
     intro_sequence(agent,victim_location,stolen)    
