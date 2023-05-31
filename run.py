@@ -19,11 +19,32 @@ def load_cities():
             c_list.append(city)
     return c_list
 
+def load_suspects():
+    with open("suspects.csv", encoding='utf-8-sig') as suspects_file:
+        suspects = csv.DictReader(suspects_file, delimiter=',')
+        s_list = []
+        for suspect in suspects:
+            s_list.append(suspect)
+        return s_list
+
         
 def select_victim():
     shuffle(cities)
     victim = cities.pop()
     return victim
+
+def select_thief():
+    shuffle(suspects)
+    thief = suspects[0]
+    return thief
+
+def generate_thief_clues(thief):
+    clues = []
+    if thief["Gender"] == "male":
+        print("thief is a man")
+    else:
+        print("thief is a woman")
+    time.sleep(5)
 
 def travel():    
     loading = "."
@@ -114,10 +135,16 @@ def interrogation_places():
 #Main function definition---------------------------------------------------
 
 def main():
-    global cities, visited, clues, victim, agent, current_location, finished, p
+    global cities, suspects, visited, clues, victim, agent, current_location, finished, p
     finished = False
     p = 0
     cities = load_cities()
+    suspects = load_suspects()
+    thief = select_thief()
+    thief_clues = generate_thief_clues(thief)
+
+    time.sleep(5)
+
     visited, clues = [], []
     victim = select_victim()
     victim_location = f"{victim['Name']}, {victim['Country']}"
@@ -130,9 +157,6 @@ def main():
     travel()
     current_location = victim
 
-    # display_destination(victim)
-    # at_destination = True
-    # destination_options()
 
     while finished == False:
         if p == 0:
