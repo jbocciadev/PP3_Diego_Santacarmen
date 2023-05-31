@@ -54,24 +54,41 @@ def intro_sequence(user,victim_location,stolen):
 
 def display_destination(destination):
     cursor.show()
-    t_print(f"Welcome to {destination['Name']}, {destination['Country']}\n")
+    t_print(f"{destination['Name']}, {destination['Country']}\n")
 
 def destination_options():
+    """
+    Display main screen for the current location's options available to the player.
+    Handles the user's selection and passes on to the next iteration of the outer loop having modified the value of var "p".
+    """
     options = ["Learn more about this place.","Interrogate witnesses.","View my clues.","Travel."]
     t_print(f"What do you want to do next, agent {agent}?\n\n")
     for i in range(len(options)):
         print(f"{i+1}_ {options[i]}")
+
     cursor.show()
     selection = input()
+    #check_selection_input(selection)
+    clear()
+    if int(selection) == 1:
+        global p
+        p = 1
+    elif int(selection) == 2:
+        p = 2
+    else:
+        pass
+
+def interrogation_places():
+    pass
     ############################################   CONTINUE HERE   #############################
 
 
 #Main function definition---------------------------------------------------
 
 def main():
-    global cities, visited, clues, victim, agent, current, finished
+    global cities, visited, clues, victim, agent, current_location, finished, p
     finished = False
-    current = "destination"
+    p = 0
     cities = load_cities()
     visited, clues = [], []
     victim = select_victim()
@@ -79,39 +96,32 @@ def main():
     stolen = choice(victim['Item'])
     finished = False
     clear()
-    agent = input(f"Identify yourself, agent!\nWhat is your name?\n")
-    
+
+    agent = input(f"Identify yourself, agent!\nWhat is your name?\n")    
     intro_sequence(agent,victim_location,stolen)    
     travel()
     current_location = victim
-    display_destination(victim)
-    at_destination = True
-    destination_options()
 
-        
-    
-    #display destination
+    # display_destination(victim)
+    # at_destination = True
+    # destination_options()
 
-
-"""
-While finished = False:
-    switch current{
-        case "destination":
-            display_destination()
+    while finished == False:
+        if p == 0:
+            display_destination(current_location)
             time.sleep(1.5)
             destination_options()
-        case interr:
-            interrogation_options()
-        case ...
-    }
-"""
-
-
-
-
-
-
-
+        elif p == 1:
+            print(f"{current_location['Description']}\n \n")
+            time.sleep(5)
+            p = 0
+            clear()
+        elif p == 2:
+            interrogation_places()
+            p = 0
+            clear()
+        else:
+            pass
 
 cursor.show()
 

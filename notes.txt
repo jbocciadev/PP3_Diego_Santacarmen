@@ -1,14 +1,28 @@
+#
 suspect = {
     "Name" : "John",
     "Surnmae" : "Smith",
     "Hair" : "blonde",
 }
+#
 
+#
+Possible values for current:
+1_ Location
+2_ interrogation_options
+3_ interrogation
+4_ travel
+5_ view_clues
+6_ suspects
+#
+
+#
 l = []
-
 for keys, values in suspect.items():
     l.append([keys,values])
 print(l)
+#
+
 
 
 """
@@ -39,3 +53,5 @@ def view_clues():
 
 
 '''
+
+Implement cont() function to ask user if they want to continue or stay (reading)
