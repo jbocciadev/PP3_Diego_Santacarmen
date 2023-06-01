@@ -1,7 +1,53 @@
 import os, time, csv, cursor, colorama
 from random import shuffle, choice
 
+def main():
+    """
+    Main function that controls the flow of the game in sequence.
+    """
+    global cities, suspects, visited, clues, victim, agent, current_location, finished, p, thief_clues, no_clue
+    finished = False
+    p = 0 #p is the variable that controls the flow of the game. It tells the system which screen to load next in the while if-else loop.
+    cities = load_cities()
+    suspects = load_suspects()
+    thief = select_thief()
+    thief_clues = generate_thief_clues(thief)
+    no_clue = ["I don't think I have seen anyone with that description.",
+    "I'm sorry agent, but that doesn't ring a bell at all!","I can't help you, sorry!","Have you seen my cat? He is orange and wears a black collar","One potato, two potatoes"]
+    visited, clues = set(), set()
+    victim = select_victim()
+    visited.add(victim["Name"])
+    escape_route = create_escape_route()
+    victim_location = f"{victim['Name']}, {victim['Country']}"
+    stolen = choice(victim['Item'])
+    finished = False
 
+    agent = input(f"Identify yourself, agent!\nWhat is your name?\n")    
+    intro_sequence(agent,victim_location,stolen)    
+    travel()
+    current_location = victim
+
+
+    while finished == False:
+        if p == 0:
+            display_destination(current_location)
+            time.sleep(0.5)
+            destination_options()
+        elif p == 1:
+            print(f"{current_location['Description']}\n \n")
+            input("Press Enter to go back to the main screen... ")
+            p = 0
+            clear()
+        elif p == 2:
+            interrogation_places()
+            p = 0
+            clear()
+        else:
+            pass
+
+cursor.show()
+
+###################### AUXILIARY FUNCTIONS ####################################
 
 def clear():
     """
@@ -214,61 +260,6 @@ def interrogation_places():
         else:
             print(f"Selection = {selection}")
             exit()
-
-    
-    #pass
-    ############################################   CONTINUE HERE   #############################
-
-
-#Main function definition---------------------------------------------------
-
-def main():
-    """
-    Main function that controls the flow of the game in sequence.
-    """
-    global cities, suspects, visited, clues, victim, agent, current_location, finished, p, thief_clues, no_clue
-    finished = False
-    p = 0 #p is the variable that controls the flow of the game. It tells the system which screen to load next in the while if-else loop.
-    cities = load_cities()
-    suspects = load_suspects()
-    thief = select_thief()
-    thief_clues = generate_thief_clues(thief)
-    no_clue = ["I don't think I have seen anyone with that description.",
-    "I'm sorry agent, but that doesn't ring a bell at all!","I can't help you, sorry!","Have you seen my cat? He is orange and wears a black collar","One potato, two potatoes"]
-    visited, clues = set(), set()
-    victim = select_victim()
-    visited.add(victim["Name"])
-    escape_route = create_escape_route()
-    #print(escape_route)
-    victim_location = f"{victim['Name']}, {victim['Country']}"
-    stolen = choice(victim['Item'])
-    finished = False
-#    clear()
-
-    agent = input(f"Identify yourself, agent!\nWhat is your name?\n")    
-    intro_sequence(agent,victim_location,stolen)    
-    travel()
-    current_location = victim
-
-
-    while finished == False:
-        if p == 0:
-            display_destination(current_location)
-            time.sleep(0.5)
-            destination_options()
-        elif p == 1:
-            print(f"{current_location['Description']}\n \n")
-            input("Press Enter to go back to the main screen... ")
-            p = 0
-            clear()
-        elif p == 2:
-            interrogation_places()
-            p = 0
-            clear()
-        else:
-            pass
-
-cursor.show()
 
 
 
