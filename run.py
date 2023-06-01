@@ -130,15 +130,20 @@ def destination_options():
 
 
 def interrogation_places():
+    """
+    1_ Loads options of landmarks for user to choose.
+    2_ Checks if user arrived following clues or travelled to wrong city.
+    3_ Displays real clues if user arrived correctly, or obviously useless clues if arrived incorrectly.
+    """
     
-    x = True
-    while x == True:
+    while True:
         t_print("Select where you want to speak to the witnesses:\n")
         time.sleep(0.5)
         give_clues = False
+        options = current_location["Landmarks"]
+
         if current_location["Previous"] in visited or len(visited) == 1:
             give_clues = True
-        options = current_location["Landmarks"]
         for i in range(len(options)):
             print(f"{i+1}_ {options[i]}")
         print("R_ Return to previous screen.")
