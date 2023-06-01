@@ -14,7 +14,7 @@ def main():
     thief_clues = generate_thief_clues(thief)
     no_clue = ["I don't think I have seen anyone with that description.",
     "I'm sorry agent, but that doesn't ring a bell at all!","I can't help you, sorry!","Have you seen my cat? He is orange and wears a black collar","One potato, two potatoes"]
-    visited, clues = set(), set()
+    visited, clues = set(), []
     victim = select_victim()
     visited.add(victim["Name"])
     escape_route = create_escape_route()
@@ -30,6 +30,7 @@ def main():
 
     while finished == False:
         if p == 0:
+            clear()
             display_destination(current_location)
             time.sleep(0.5)
             destination_options()
@@ -42,6 +43,10 @@ def main():
             interrogation_places()
             p = 0
             clear()
+        elif p == 3:
+            display_clues()
+            input("Press Enter to go back to the main screen... ")
+            p = 0
         else:
             pass
 
@@ -100,6 +105,7 @@ def create_escape_route():
             route.append(cities[i]["Name"])
             cities[i-1]["Clues_out"] = cities[i]["Clues_in"]
             cities[i-1]["Clues_out"].append(choice(thief_clues))
+            shuffle(cities[i-1]["Clues_out"])
             cities[i-1]["Previous"] = cities[i]["Name"]
         else:
             continue
@@ -240,27 +246,36 @@ def interrogation_places():
             clear()
             s = int(selection)-1
             t_print(f'Witness: "{current_location["Clues_out"][s]}"\n')
-            clues.add(current_location["Clues_out"][s])        
+            clues.append(current_location["Clues_out"][s])        
             input("Press Enter to continue... ")
             clear()
         elif selection == "2":
             clear()
             s = int(selection)-1
             t_print(f'Witness: "{current_location["Clues_out"][s]}"\n')
-            clues.add(current_location["Clues_out"][s])        
+            clues.append(current_location["Clues_out"][s])        
             input("Press Enter to continue... ")
             clear()
         elif selection == "3":
             clear()
             s = int(selection)-1
             t_print(f'Witness: "{current_location["Clues_out"][s]}"\n')
-            clues.add(current_location["Clues_out"][s])        
+            clues.append(current_location["Clues_out"][s])        
             input("Press Enter to continue... ")
             clear()
         else:
             print(f"Selection = {selection}")
             exit()
 
-
+def display_clues():
+    c_len = len(clues)
+    if c_len == 0:
+        t_print(f"You have collected no clues yet.\n")
+    else:
+        t_print(f"Clues collected:\n")
+        for i in range(c_len):
+            t_print(f"{i+1}_ {clues[i]}\n")
+    return
+    
 
 main()
