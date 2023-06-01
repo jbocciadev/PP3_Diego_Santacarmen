@@ -40,7 +40,7 @@ def create_escape_route():
         if cities[i]["Name"] not in route:
             route.append(cities[i]["Name"])
             cities[i-1]["Clues_out"] = cities[i]["Clues_in"]
-            cities[i-1]["Clues_out"].append(thief_clues.pop())
+            cities[i-1]["Clues_out"].append(choice(thief_clues))
             cities[i-1]["Previous"] = cities[i]["Name"]
         else:
             continue
@@ -153,26 +153,29 @@ def interrogation_places():
             return
         elif give_clues == False:
             clear()
-            print(choice(no_clue))
+            t_print(f"choice(no_clue)\n")
             input("Press Enter to continue... ")
         elif selection == "1":
             clear()
             s = int(selection)-1
-            print(current_location["Clues_out"][s])
+            t_print(f'Witness: "{current_location["Clues_out"][s]}"\n')
             clues.add(current_location["Clues_out"][s])        
             input("Press Enter to continue... ")
+            clear()
         elif selection == "2":
             clear()
             s = int(selection)-1
-            print(current_location["Clues_out"][s])
+            t_print(f'Witness: "{current_location["Clues_out"][s]}"\n')
             clues.add(current_location["Clues_out"][s])        
             input("Press Enter to continue... ")
+            clear()
         elif selection == "3":
             clear()
             s = int(selection)-1
-            print(current_location["Clues_out"][s])
+            t_print(f'Witness: "{current_location["Clues_out"][s]}"\n')
             clues.add(current_location["Clues_out"][s])        
             input("Press Enter to continue... ")
+            clear()
         else:
             print(f"Selection = {selection}")
             exit()
@@ -198,7 +201,7 @@ def main():
     victim = select_victim()
     visited.add(victim["Name"])
     escape_route = create_escape_route()
-    print(escape_route)
+    #print(escape_route)
     victim_location = f"{victim['Name']}, {victim['Country']}"
     stolen = choice(victim['Item'])
     finished = False
