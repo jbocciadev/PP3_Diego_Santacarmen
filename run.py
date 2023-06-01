@@ -1,5 +1,5 @@
 import os, time, csv, cursor, colorama
-from random import shuffle, randint, choice
+from random import shuffle, choice
 
 
 
@@ -10,6 +10,9 @@ def clear():
     os.system("clear")
 
 def load_cities():
+    """
+    Opens cities.csv file and returns list of dict elements with all cities in the file.
+    """
     with open("cities.csv", encoding='utf-8-sig') as cities_file:
         cities = csv.DictReader(cities_file, delimiter=',')
         c_list = []
@@ -21,6 +24,9 @@ def load_cities():
     return c_list
 
 def load_suspects():
+    """
+    Opens suspects.csv file and returns list of dict elements with all suspects in the file.
+    """
     with open("suspects.csv", encoding='utf-8-sig') as suspects_file:
         suspects = csv.DictReader(suspects_file, delimiter=',')
         s_list = []
@@ -30,11 +36,18 @@ def load_suspects():
 
         
 def select_victim():
+    """
+    Shuffles list of cities and returns the first one as the victim.
+    """
     shuffle(cities)
     victim = cities[0]
     return victim
 
 def create_escape_route():
+    """
+    Iterates through the list of cities and adds them to a new list (escape_route). Also adds clues of city i into city i-1 dict object
+    to allow the system to present clues to the user.
+    """
     route = [victim["Name"]]
     for i in range(len(cities)):
         if cities[i]["Name"] not in route:
@@ -47,16 +60,21 @@ def create_escape_route():
     return route
 
 def select_thief():
+    """
+    Shuffles list of suspects and returns the first one as the thief.
+    """
     shuffle(suspects)
     thief = suspects[0]
     return thief
 
 def generate_thief_clues(thief):
+    """
+    Creates and returns list of thief-specific clues for the user to read, based on values in object.
+    """
     clues = []
     feature = thief["Feature"]
     profession = thief["Profession"]
     eyes = thief["Eyes"]
-    global pron
     if thief["Gender"] == "male":
         pron = "he"
     else:
@@ -72,8 +90,11 @@ def generate_thief_clues(thief):
     return clues
 
 def travel():    
+    """
+    prints a sequence simulating the waiting time of a trip to the destination.
+    """
     loading = "."
-    for i in range(5):
+    for i in range(4):
         print(loading)
         loading += '.'
         time.sleep(1)
@@ -81,11 +102,17 @@ def travel():
         cursor.hide()
 
 def t_print(message):
+    """
+    Prints the passed string to the console, simulating a typewriter.
+    """
     for char in message:
         time.sleep(0.05)
         print(char, end='', flush=True)
 
 def intro_sequence(user,victim_location,stolen):
+    """
+    Prints sequence introducing the user to the game and into the case to solve.
+    """
     clear()
     t_print(f"Agent {user}, we have received a report from {victim_location} that {stolen} has been stolen.\n")
     time.sleep(1.5)
@@ -97,6 +124,9 @@ def intro_sequence(user,victim_location,stolen):
     clear()
 
 def display_destination(destination):
+    """
+    Prints the destination name to the console.
+    """
     cursor.show()
     t_print(f"{destination['Name']}, {destination['Country']}\n")
 
@@ -131,9 +161,9 @@ def destination_options():
 
 def interrogation_places():
     """
-    1_ Loads options of landmarks for user to choose.
-    2_ Checks if user arrived following clues or travelled to wrong city.
-    3_ Displays real clues if user arrived correctly, or obviously useless clues if arrived incorrectly.
+    Loads options of landmarks for user to choose.
+    Checks if user arrived following clues or travelled to wrong city.
+    Displays real clues if user arrived correctly, or obviously useless clues if arrived incorrectly.
     """
     
     while True:
@@ -193,6 +223,9 @@ def interrogation_places():
 #Main function definition---------------------------------------------------
 
 def main():
+    """
+    Main function that controls the flow of the game in sequence.
+    """
     global cities, suspects, visited, clues, victim, agent, current_location, finished, p, thief_clues, no_clue
     finished = False
     p = 0 #p is the variable that controls the flow of the game. It tells the system which screen to load next in the while if-else loop.
