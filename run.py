@@ -22,6 +22,9 @@ def main():
     stolen = choice(victim['Item'])
     finished = False
 
+    game_intro()
+    input("Press Enter to continue... ")
+    clear()
     agent = input(f"Identify yourself, agent!\nWhat is your name?\n")    
     intro_sequence(agent,victim_location,stolen)    
     travel()
@@ -283,6 +286,31 @@ def display_clues():
         for i in range(c_len):
             t_print(f"{i+1}_ {clues[i]}\n")
     return
+    
+def game_intro():
+    title = """
+      ____  _                     _____             __                                           ___ 
+     / __ \(_)__  ____ _____     / ___/____ _____  / /_____ __________ __________ ___  ___  ____/__ |
+    / / / / / _ \/ __ `/ __ \    \__ \/ __ `/ __ \/ __/ __ `/ ___/ __ `/ ___/ __ `__ \/ _ \/ __ \/ _/
+   / /_/ / /  __/ /_/ / /_/ /   ___/ / /_/ / / / / /_/ /_/ / /__/ /_/ / /  / / / / / /  __/ / / /_/  
+  /_____/_/\___/\__, /\____/   /____/\__,_/_/ /_/\__/\__,_/\___/\__,_/_/  /_/ /_/ /_/\___/_/ /_(_)   
+               /____/                                                                                
+"""
+    description = """
+    At "Where in the world is Diego Santacarmen you will have to chase the thief around the World collecting clues.
+    Arrest your suspect before time runs out!
+    """
+    t_print("Where in the world is...")
+    cursor.hide()
+    time.sleep(1)
+    print(title)
+    time.sleep(2)
+    for i in range(15):
+        print("")
+        time.sleep(.1)
+    clear()
+    t_print(description)
+    cursor.show()
     
 
 main()
