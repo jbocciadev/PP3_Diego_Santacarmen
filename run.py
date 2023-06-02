@@ -221,6 +221,7 @@ def interrogation_places():
     while True:
         t_print("Select where you want to speak to the witnesses:\n")
         time.sleep(0.5)
+        city = current_location["Name"]
         give_clues = False
         options = current_location["Landmarks"]
 
@@ -245,22 +246,28 @@ def interrogation_places():
         elif selection == "1":
             clear()
             s = int(selection)-1
-            t_print(f'Witness: "{current_location["Clues_out"][s]}"\n')
-            clues.append(current_location["Clues_out"][s])        
+            clue = current_location["Clues_out"][s]
+            t_print(f'Witness: "{clue}"\n')
+            if clue not in clues:
+                clues.append(f"[{city}]_ {clue}")        
             input("Press Enter to continue... ")
             clear()
         elif selection == "2":
             clear()
             s = int(selection)-1
-            t_print(f'Witness: "{current_location["Clues_out"][s]}"\n')
-            clues.append(current_location["Clues_out"][s])        
+            clue = current_location["Clues_out"][s]
+            t_print(f'Witness: "{clue}"\n')
+            if clue not in clues:
+                clues.append(f"[{city}]_ {clue}")          
             input("Press Enter to continue... ")
             clear()
         elif selection == "3":
             clear()
             s = int(selection)-1
-            t_print(f'Witness: "{current_location["Clues_out"][s]}"\n')
-            clues.append(current_location["Clues_out"][s])        
+            clue = current_location["Clues_out"][s]
+            t_print(f'Witness: "{clue}"\n')
+            if clue not in clues:
+                clues.append(f"[{city}]_ {clue}")           
             input("Press Enter to continue... ")
             clear()
         else:
