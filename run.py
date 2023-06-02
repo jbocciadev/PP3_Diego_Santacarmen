@@ -1,5 +1,6 @@
 import os, time, csv, cursor, colorama
 from random import shuffle, choice
+from pprint import pprint
 
 def main():
     """
@@ -22,8 +23,9 @@ def main():
     stolen = choice(victim['Item'])
     finished = False
 
-    game_intro()
-    input("Press Enter to continue... ")
+    clear()
+    #game_intro()
+    #input("Press Enter to continue... ")
     clear()
     agent = input(f"Identify yourself, agent!\nWhat is your name?\n")    
     intro_sequence(agent,victim_location,stolen)    
@@ -49,6 +51,9 @@ def main():
         elif p == 3:
             display_clues()
             input("Press Enter to go back to the main screen... ")
+            p = 0
+        elif p == 4:
+            display_suspects()
             p = 0
         else:
             pass
@@ -118,8 +123,7 @@ def select_thief():
     """
     Shuffles list of suspects and returns the first one as the thief.
     """
-    shuffle(suspects)
-    thief = suspects[0]
+    thief = choice(suspects)
     return thief
 
 def generate_thief_clues(thief):
@@ -190,14 +194,13 @@ def destination_options():
     Display main screen for the current location's options available to the player.
     Handles the user's selection and passes on to the next iteration of the outer loop having modified the value of var "p".
     """
-    options = ["Learn more about this place.","Interrogate witnesses.","View my clues.","View my suspects.","Travel."]
+    options = ["Learn more about this place.","Interrogate witnesses.","View my clues.","View the usual suspects.","Travel.","Arrest suspect!"]
     t_print(f"What do you want to do next, agent {agent}?\n\n")
     for i in range(len(options)):
         print(f"{i+1}_ {options[i]}")
 
     cursor.show()
     selection = input()
-    #check_selection_input(selection)
     clear()
     if int(selection) == 1:
         global p
@@ -305,12 +308,39 @@ def game_intro():
     time.sleep(1)
     print(title)
     time.sleep(2)
-    for i in range(15):
+    for i in range(20):
         print("")
-        time.sleep(.1)
+        time.sleep(.07)
     clear()
     t_print(description)
     cursor.show()
+
+def display_suspects():
+    while True:
+        t_print("Select a suspect to learn more:\n")
+        options = ["1","2","3","4","5","6","7","8","9","10","11","12","13","r","R"]
+        for i in range(len(suspects)):
+            suspect_name = str(suspects[i]["Name"] + ' ' + suspects[i]["Surname"])
+            print(f"{i+1}_ {suspect_name}")
+        print("R_ Return to previous screen.")
+        selection = input()
+        if selection == "r" or selection == "R":
+            return
+        elif selection not in options:
+            clear()
+            print(f"You have selected {selection}. This is not a valid option. Please, select a valid option:")
+            continue
+        else:
+            clear()
+            suspect = suspects[int(selection)-1]
+            for key, value in suspect.items():
+                print(f"{key} : {value[0].upper()}{value[1:]}")
+            input("Press Enter to continue... ")
+            clear()
+            continue
+
+
+
     
 
 main()
