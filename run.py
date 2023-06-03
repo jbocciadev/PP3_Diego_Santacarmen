@@ -23,13 +23,14 @@ def main():
     stolen = choice(victim['Item'])
     finished = False
 
+    
     clear()
     #game_intro()
     #input("Press Enter to continue... ")
     clear()
     agent = input(f"Identify yourself, agent!\nWhat is your name?\n")    
     intro_sequence(agent,victim_location,stolen)    
-    travel()
+    travel("",victim['Name'])
     current_location = victim
 
 
@@ -148,16 +149,17 @@ def generate_thief_clues(thief):
     shuffle(clues)
     return clues
 
-def travel():    
+def travel(origin,destination):    
     """
     prints a sequence simulating the waiting time of a trip to the destination.
     """
-    loading = "."
-    for i in range(4):
-        print(loading)
-        loading += '.'
-        time.sleep(1)
+    trip = [".         "," .        ","  .       ","   .      ","    .     ","     .    ","      .   ","       .  ","        . ","         ."]
+    for i in range(10):
         clear()
+        print(origin, end=" ")
+        print(trip[i], end=" ")
+        print(destination)
+        time.sleep(0.3)
         cursor.hide()
 
 def t_print(message):
