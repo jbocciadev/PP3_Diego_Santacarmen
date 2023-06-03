@@ -22,8 +22,6 @@ def main():
     victim_location = f"{victim['Name']}, {victim['Country']}"
     stolen = choice(victim['Item'])
     finished = False
-
-    
     clear()
     #game_intro()
     #input("Press Enter to continue... ")
@@ -200,12 +198,11 @@ def destination_options():
     t_print(f"What do you want to do next, agent {agent}?\n\n")
     for i in range(len(options)):
         print(f"{i+1}_ {options[i]}")
-
+    global p
     cursor.show()
     selection = input()
     clear()
     if int(selection) == 1:
-        global p
         p = 1
     elif int(selection) == 2:
         p = 2
@@ -216,7 +213,9 @@ def destination_options():
     elif int(selection) == 5:
         p = 5
     else:
-        pass
+        print(f"You have selected '{selection}. Please, make a valid selection")
+        time.sleep(2)
+        input("Press Enter to continue... ")
 
 
 def interrogation_places():
