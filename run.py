@@ -9,6 +9,7 @@ def main():
     global cities, suspects, visited, clues, victim, agent, current_location, finished, p, thief_clues, no_clue
     finished = False
     p = 0 #p is the variable that controls the flow of the game. It tells the system which screen to load next in the while if-else loop.
+    time = 24
     cities = load_cities()
     suspects = load_suspects()
     thief = select_thief()
@@ -28,7 +29,7 @@ def main():
     clear()
     agent = input(f"Identify yourself, agent!\nWhat is your name?\n")    
     intro_sequence(agent,victim_location,stolen)    
-    travel("",victim['Name'])
+    travel("Headquarters",victim['Name'])
     current_location = victim
 
 
@@ -54,6 +55,13 @@ def main():
         elif p == 4:
             display_suspects()
             p = 0
+        elif p == 5:
+            destination = travel_options()
+            travel(current_location["Name"], destination["Name"])
+            current_location = destination
+            visited.add(current_location["Name"])
+            p = 0
+            countdown()
         else:
             pass
 
@@ -154,9 +162,10 @@ def travel(origin,destination):
     trip = [".         "," .        ","  .       ","   .      ","    .     ","     .    ","      .   ","       .  ","        . ","         ."]
     for i in range(10):
         clear()
-        print(origin, end=" ")
-        print(trip[i], end=" ")
-        print(destination)
+        print(f"{origin}{trip[i]}{destination}")
+        # print(origin, end=" ")
+        # print(trip[i], end=" ")
+        # print(destination)
         time.sleep(0.3)
         cursor.hide()
 
@@ -339,6 +348,39 @@ def display_suspects():
             input("Press Enter to continue... ")
             clear()
             continue
+
+def travel_options():
+    global cities, visited, current_location
+    clear()
+    cursor.hide()
+    t_print("Please choose your next destination: \n\n")
+    options = ["r","R"]
+    seen = " (Already visited)"
+    while True:
+        for i in range(len(cities)):
+            # message = ""
+            city = cities[i]["Name"] + ", " + cities[i]["Country"]
+            if current_location == cities[i]:
+                continue
+            if cities[i]["Name"] in visited:
+                city += seen
+            print(f"{i}_ {city}")
+            options.append(str(i))
+        print("R_ Return to the previous screen.")
+        destination = input()
+        if destination == "r" or destination == "R":
+            return
+        elif destination not in options:
+            clear()
+            t_print(f"Your selection is not valid. Please make a valid selection:\n")
+            continue
+        else:
+            break
+    return cities[int(destination)]
+
+
+
+
 
 
 
