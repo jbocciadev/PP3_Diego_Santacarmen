@@ -24,8 +24,8 @@ def main():
     stolen = choice(victim['Item'])
     finished = False
     clear()
-    #game_intro()
-    #input("Press Enter to continue... ")
+    game_intro()
+    input("Press Enter to continue... ")
     clear()
     agent = input(f"Identify yourself, agent!\nWhat is your name?\n")    
     intro_sequence(agent,victim_location,stolen)    
@@ -261,7 +261,7 @@ def interrogation_places():
             continue
         elif selection == "R" or selection == "r":
             return
-        elif give_clues == False: #If
+        elif give_clues == False: #Prints bogus clue
             clear()
             t_print(f"{choice(no_clue)}\n")
             input("Press Enter to continue... ")
@@ -294,10 +294,13 @@ def interrogation_places():
             input("Press Enter to continue... ")
             clear()
         else:
-            print(f"Selection = {selection}")
+            print(f"Selection = {selection}")#Catch-all prints user selection
             exit()
 
 def display_clues():
+    """
+    Prints the clues collected by the user
+    """
     c_len = len(clues)
     if c_len == 0:
         t_print(f"You have collected no clues yet.\n")
@@ -308,6 +311,9 @@ def display_clues():
     return
     
 def game_intro():
+    """
+    Prints a title sequence for the game
+    """
     title = """
       ____  _                     _____             __                                           ___ 
      / __ \(_)__  ____ _____     / ___/____ _____  / /_____ __________ __________ ___  ___  ____/__ |
@@ -333,6 +339,9 @@ def game_intro():
     cursor.show()
 
 def display_suspects():
+    """
+    Prints a list of usual suspects for the player to arrest the correct one
+    """
     while True:
         t_print("Select a suspect to learn more:\n")
         options = ["1","2","3","4","5","6","7","8","9","10","11","12","13","r","R"]
@@ -357,6 +366,9 @@ def display_suspects():
             continue
 
 def travel_options():
+    """
+    Prints the travel options available to the player and handles the selection made
+    """
     global cities, visited, current_location
     clear()
     cursor.hide()
@@ -374,6 +386,7 @@ def travel_options():
             print(f"{i}_ {city}")
             options.append(str(i))
         print("R_ Return to the previous screen.")
+
         destination = input()
         if destination == "r" or destination == "R":
             return current_location
@@ -386,6 +399,9 @@ def travel_options():
     return cities[int(destination)]
 
 def countdown():
+    """
+    Prints a countdown sequence with the time remaining for the game to be over
+    """
     global time_remaining, finished
     clear()
     cursor.hide()
@@ -397,12 +413,5 @@ def countdown():
             time.sleep(1)
         
 
-
-
-
-
-
-
-    
 
 main()
