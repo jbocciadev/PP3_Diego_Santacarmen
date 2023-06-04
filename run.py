@@ -247,7 +247,7 @@ def interrogation_places():
         give_clues = False
         options = current_location["Landmarks"]
 
-        if current_location["Previous"] in visited or len(visited) == 1:
+        if current_location["Previous"] in visited or len(visited) == 1: #Determines if the user arrived to this destination following the clues.
             give_clues = True
         for i in range(len(options)):
             print(f"{i+1}_ {options[i]}")
@@ -261,10 +261,11 @@ def interrogation_places():
             continue
         elif selection == "R" or selection == "r":
             return
-        elif give_clues == False:
+        elif give_clues == False: #If
             clear()
-            t_print(f"choice(no_clue)\n")
+            t_print(f"{choice(no_clue)}\n")
             input("Press Enter to continue... ")
+            clear()
         elif selection == "1":
             clear()
             s = int(selection)-1
