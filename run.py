@@ -121,13 +121,14 @@ def create_escape_route():
     to allow the system to present clues to the user.
     """
     route = [victim["Name"]]
+    victim["Previous"] = ""
     for i in range(len(cities)):
         if cities[i]["Name"] not in route:
             route.append(cities[i]["Name"])
             cities[i-1]["Clues_out"] = cities[i]["Clues_in"]
             cities[i-1]["Clues_out"].append(choice(thief_clues))
             shuffle(cities[i-1]["Clues_out"])
-            cities[i-1]["Previous"] = cities[i]["Name"]
+            cities[i]["Previous"] = cities[i-1]["Name"]
         else:
             continue
     return route
