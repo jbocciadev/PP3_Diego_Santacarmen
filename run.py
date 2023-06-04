@@ -6,10 +6,10 @@ def main():
     """
     Main function that controls the flow of the game in sequence.
     """
-    global cities, suspects, visited, clues, victim, agent, current_location, finished, p, thief_clues, no_clue
+    global cities, suspects, visited, clues, victim, agent, current_location, finished, p, thief_clues, no_clue, time_remaining
     finished = False
     p = 0 #p is the variable that controls the flow of the game. It tells the system which screen to load next in the while if-else loop.
-    time = 24
+    time_remaining = 24
     cities = load_cities()
     suspects = load_suspects()
     thief = select_thief()
@@ -34,36 +34,42 @@ def main():
 
 
     while finished == False:
-        if p == 0:
-            clear()
-            display_destination(current_location)
-            time.sleep(0.5)
-            destination_options()
-        elif p == 1:
-            print(f"{current_location['Description']}\n \n")
-            input("Press Enter to go back to the main screen... ")
-            p = 0
-            clear()
-        elif p == 2:
-            interrogation_places()
-            p = 0
-            clear()
-        elif p == 3:
-            display_clues()
-            input("Press Enter to go back to the main screen... ")
-            p = 0
-        elif p == 4:
-            display_suspects()
-            p = 0
-        elif p == 5:
-            destination = travel_options()
-            travel(current_location["Name"], destination["Name"])
-            current_location = destination
-            visited.add(current_location["Name"])
-            p = 0
-            countdown()
+        if time_remaining > 0:
+            if p == 0:
+                clear()
+                display_destination(current_location)
+                time.sleep(0.5)
+                destination_options()
+            elif p == 1:
+                print(f"{current_location['Description']}\n \n")
+                input("Press Enter to go back to the main screen... ")
+                p = 0
+                clear()
+            elif p == 2:
+                interrogation_places()
+                p = 0
+                clear()
+            elif p == 3:
+                display_clues()
+                input("Press Enter to go back to the main screen... ")
+                p = 0
+            elif p == 4:
+                display_suspects()
+                p = 0
+            elif p == 5:
+                destination = travel_options()
+                if current_location != destination:
+                    travel(current_location["Name"], destination["Name"])
+                    current_location = destination
+                    visited.add(current_location["Name"])
+                    countdown()
+                p = 0                
+            else:
+                pass
         else:
-            pass
+            t_print(f"Agent {agent}! I am afraid you have run out of time and the thief has escaped. \nBetter luck next time!\n")
+            cursor.show()
+            finished = True
 
 cursor.show()
 
@@ -211,18 +217,18 @@ def destination_options():
     cursor.show()
     selection = input()
     clear()
-    if int(selection) == 1:
+    if selection == "1":
         p = 1
-    elif int(selection) == 2:
+    elif selection == "2":
         p = 2
-    elif int(selection) == 3:
+    elif selection == "3":
         p = 3
-    elif int(selection) == 4:
+    elif selection == "4":
         p = 4
-    elif int(selection) == 5:
+    elif selection == "5":
         p = 5
     else:
-        print(f"You have selected '{selection}. Please, make a valid selection")
+        print(f"You have selected '{selection}'. Please, make a valid selection")
         time.sleep(2)
         input("Press Enter to continue... ")
 
@@ -369,14 +375,26 @@ def travel_options():
         print("R_ Return to the previous screen.")
         destination = input()
         if destination == "r" or destination == "R":
-            return
+            return current_location
         elif destination not in options:
             clear()
-            t_print(f"Your selection is not valid. Please make a valid selection:\n")
+            t_print(f"Your selection is not valid. Please make a valid selection:\n\n")
             continue
         else:
             break
     return cities[int(destination)]
+
+def countdown():
+    global time_remaining, finished
+    clear()
+    cursor.hide()
+    for i in range(5):
+        if time_remaining >= 0:
+            clear()
+            print(f"Time remaining: {time_remaining} hours.")
+            time_remaining -= 1
+            time.sleep(1)
+        
 
 
 
