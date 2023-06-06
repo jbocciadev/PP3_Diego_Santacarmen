@@ -1,4 +1,4 @@
-import os, time, csv, cursor, colorama
+import os, time, csv, cursor
 from random import shuffle, choice
 from pprint import pprint
 
@@ -13,8 +13,6 @@ def main():
     cities = load_cities()
     suspects = load_suspects()
     thief = select_thief()
-    print(thief)
-    time.sleep(2)
     thief_clues = generate_thief_clues(thief)
     no_clue = ["I don't think I have seen anyone with that description.",
     "I'm sorry agent, but that doesn't ring a bell at all!","I can't help you, sorry!","Have you seen my cat? He is orange and wears a black collar","One potato, two potatoes"]
@@ -70,7 +68,7 @@ def main():
                 suspect = arrest(thief)
                 if suspect == 0:
                     clear()
-                    t_print(f"Congratulations, agent {agent}. You have caught the thief and {stolen} has been recovered successfully \nAnother case solved!\n")
+                    t_print(f"Congratulations, agent {agent}. You have caught the thief and {stolen} has been recovered successfully! \nAnother case solved!\n")
                     cursor.show()
                     finished = True
                 else:
@@ -144,6 +142,7 @@ def create_escape_route():
             cities[i]["Previous"] = cities[i-1]["Name"]
         else:
             continue
+    shuffle(cities)
     return route
 
 def select_thief():
@@ -183,9 +182,6 @@ def travel(origin,destination):
     for i in range(10):
         clear()
         print(f"{origin}{trip[i]}{destination}")
-        # print(origin, end=" ")
-        # print(trip[i], end=" ")
-        # print(destination)
         time.sleep(0.3)
         cursor.hide()
 
@@ -321,10 +317,10 @@ def display_clues():
     if c_len == 0:
         t_print(f"You have collected no clues yet.\n")
     else:
-        t_print(f"Clues collected:\n")
+        t_print(f"Clues collected:\n\n")
         for i in range(c_len):
             print(f"{i+1}_ {clues[i]}\n")
-            time.sleep(0.3)
+            time.sleep(0.5)
     return
     
 def game_intro():
@@ -443,8 +439,6 @@ def arrest(thief):
             options.append(str(i+1))
         print("R_ Return to the previous screen.")
         selection = input()
-        print(suspects[int(selection)-1])
-        print(thief)
         time.sleep(2)
         if selection not in options:
             clear()
@@ -453,7 +447,7 @@ def arrest(thief):
         elif selection == 'r' or selection == 'R':
             clear()
             return
-        elif suspects[int(selection)-1] == thief:
+        elif suspects[int(selection)-1] == thief:#Returns 0 if the player selected the correct suspect, 1 otherwise.
             return 0
         else:
             return 1    
