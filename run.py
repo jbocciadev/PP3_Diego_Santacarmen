@@ -1,20 +1,22 @@
 import os, time, csv, cursor
 from random import shuffle, choice
 
+
 def main():
     """
     Main function that controls the flow of the game in sequence.
     """
     global cities, suspects, visited, clues, victim, agent, current_location, finished, p, thief_clues, no_clue, time_remaining
+
     finished = False
-    p = 0 #p is the variable that controls the flow of the game. It tells the system which screen to load next in the while if-else loop.
+    p = 0   # p is the variable that controls the flow of the game. It tells the system which screen to load next in the while if-else loop.
     time_remaining = 24
     cities = load_cities()
     suspects = load_suspects()
     thief = select_thief()
     thief_clues = generate_thief_clues(thief)
     no_clue = ["I don't think I have seen anyone with that description.",
-    "I'm sorry agent, but that doesn't ring a bell at all!","I can't help you, sorry!","Have you seen my cat? He is orange and wears a black collar","One potato, two potatoes"]
+        "I'm sorry agent, but that doesn't ring a bell at all!", "I can't help you, sorry!", "Have you seen my cat? He is orange and wears a black collar", "One potato, two potatoes"]
     visited, clues = set(), []
     victim = select_victim()
     visited.add(victim["Name"])
@@ -26,13 +28,12 @@ def main():
     game_intro()
     input("Press Enter to continue... ")
     clear()
-    agent = input(f"Identify yourself, agent!\nWhat is your name?\n")    
-    intro_sequence(agent,victim_location,stolen)    
-    travel("Headquarters",victim['Name'])
+    agent = input(f"Identify yourself, agent!\nWhat is your name?\n")
+    intro_sequence(agent, victim_location, stolen)
+    travel("Headquarters", victim['Name'])
     current_location = victim
 
-
-    while finished == False:
+    while finished is False:
         if time_remaining > 0:
             if p == 0:
                 clear()
@@ -62,34 +63,36 @@ def main():
                     current_location = destination
                     visited.add(current_location["Name"])
                     countdown()
-                p = 0                
+                p = 0
             elif p == 6:
                 suspect = arrest(thief)
                 if suspect == 0:
                     clear()
-                    t_print(f"Congratulations, agent {agent}. You have caught the thief and {stolen} has been recovered successfully! \nAnother case solved!\n")
+                    t_print(f"Congratulations, agent {agent}! \nYou have caught the thief and \n{stolen} has been recovered successfully! \nAnother case solved!\n")
                     cursor.show()
                     finished = True
                 else:
                     clear()
-                    t_print(f"Agent {agent}. I regret to inform you that you have not caught the right suspect. The thief has now run away and {stolen} will never be recovered again!\n")
+                    t_print(f"Agent {agent}, \nI regret to inform you that you have not caught the right suspect.\n The thief has now run away and \n{stolen} will never be recovered again!\n")
                     break
             else:
                 continue
         else:
-            t_print(f"Agent {agent}! I am afraid you have run out of time and the thief has escaped. \nBetter luck next time!\n")
+            t_print(f"Agent {agent}, \nI am afraid you have run out of time and the thief has escaped. \nBetter luck next time!\n")
             cursor.show()
             finished = True
+    cursor.show()
 
-cursor.show()
 
-###################### AUXILIARY FUNCTIONS ####################################
+""" ###################### AUXILIARY FUNCTIONS #################################### """
+
 
 def clear():
     """
     Clears the terminal. See https://stackoverflow.com/questions/517970/how-to-clear-the-interpreter-console
     """
     os.system("clear")
+
 
 def load_cities():
     """
@@ -105,6 +108,7 @@ def load_cities():
             c_list.append(city)
     return c_list
 
+
 def load_suspects():
     """
     Opens suspects.csv file and returns list of dict elements with all suspects in the file.
@@ -116,7 +120,7 @@ def load_suspects():
             s_list.append(suspect)
         return s_list
 
-        
+
 def select_victim():
     """
     Shuffles list of cities and returns the first one as the victim.
@@ -124,6 +128,7 @@ def select_victim():
     shuffle(cities)
     victim = cities[0]
     return victim
+
 
 def create_escape_route():
     """
@@ -144,12 +149,14 @@ def create_escape_route():
     shuffle(cities)
     return route
 
+
 def select_thief():
     """
     Shuffles list of suspects and returns the first one as the thief.
     """
     thief = choice(suspects)
     return thief
+
 
 def generate_thief_clues(thief):
     """
@@ -163,7 +170,7 @@ def generate_thief_clues(thief):
         pron = "he"
     else:
         pron = "she"
-    clues.append(f"I saw the thief! {pron.capitalize()} had {thief['Hair']} hair.")    
+    clues.append(f"I saw the thief! {pron.capitalize()} had {thief['Hair']} hair.")
     if feature[0] == "a":
         clues.append(f"I saw {pron} had {feature}.")
     else:
@@ -173,16 +180,18 @@ def generate_thief_clues(thief):
     shuffle(clues)
     return clues
 
-def travel(origin,destination):    
+
+def travel(origin, destination):
     """
     prints a sequence simulating the waiting time of a trip to the destination.
     """
-    trip = [".         "," .        ","  .       ","   .      ","    .     ","     .    ","      .   ","       .  ","        . ","         ."]
+    trip = [".         ", " .        ", "  .       ", "   .      ", "    .     ", "     .    ", "      .   ", "       .  ", "        . ", "         ."]
     for i in range(10):
         clear()
         print(f"{origin}{trip[i]}{destination}")
         time.sleep(0.3)
         cursor.hide()
+
 
 def t_print(message):
     """
@@ -192,7 +201,8 @@ def t_print(message):
         time.sleep(0.05)
         print(char, end='', flush=True)
 
-def intro_sequence(user,victim_location,stolen):
+
+def intro_sequence(user, victim_location, stolen):
     """
     Prints sequence introducing the user to the game and into the case to solve.
     """
@@ -206,6 +216,7 @@ def intro_sequence(user,victim_location,stolen):
     cursor.hide()
     clear()
 
+
 def display_destination(destination):
     """
     Prints the destination name to the console.
@@ -213,12 +224,13 @@ def display_destination(destination):
     cursor.show()
     t_print(f"{destination['Name']}, {destination['Country']}\n")
 
+
 def destination_options():
     """
     Display main screen for the current location's options available to the player.
     Handles the user's selection and passes on to the next iteration of the outer loop having modified the value of var "p".
     """
-    options = ["Learn more about this place.","Interrogate witnesses.","View my clues.","View the usual suspects.","Travel.","Arrest suspect!"]
+    options = ["Learn more about this place.", "Interrogate witnesses.", "View my clues.", "View the usual suspects.", "Travel.", "Arrest suspect!"]
     t_print(f"What do you want to do next, agent {agent}?\n\n")
     for i in range(len(options)):
         print(f"{i+1}_ {options[i]}")
@@ -250,7 +262,7 @@ def interrogation_places():
     Checks if user arrived following clues or travelled to wrong city.
     Displays real clues if user arrived correctly, or obviously useless clues if arrived incorrectly.
     """
-    
+
     while True:
         t_print("Select where you want to speak to the witnesses:\n")
         time.sleep(0.5)
@@ -258,13 +270,13 @@ def interrogation_places():
         give_clues = False
         options = current_location["Landmarks"]
 
-        if current_location["Previous"] in visited or len(visited) == 1: #Determines if the user arrived to this destination following the clues.
+        if current_location["Previous"] in visited or len(visited) == 1:  # Determines if the user arrived to this destination following the clues.
             give_clues = True
         for i in range(len(options)):
             print(f"{i+1}_ {options[i]}")
         print("R_ Return to previous screen.")
 
-        valid_selections = ["1","2","3","R","r"]        
+        valid_selections = ["1", "2", "3", "R", "r"]
         selection = input()
         if selection not in valid_selections:
             clear()
@@ -272,7 +284,7 @@ def interrogation_places():
             continue
         elif selection == "R" or selection == "r":
             return
-        elif give_clues == False: #Prints bogus clue
+        elif give_clues is False:  # Prints bogus clue
             clear()
             t_print(f"{choice(no_clue)}\n")
             input("Press Enter to continue... ")
@@ -283,7 +295,7 @@ def interrogation_places():
             clue = current_location["Clues_out"][s]
             t_print(f'Witness: "{clue}"\n')
             if clue not in clues:
-                clues.append(f"[{city}]_ {clue}")        
+                clues.append(f"[{city}]_ {clue}")
             input("Press Enter to continue... ")
             clear()
         elif selection == "2":
@@ -292,7 +304,7 @@ def interrogation_places():
             clue = current_location["Clues_out"][s]
             t_print(f'Witness: "{clue}"\n')
             if clue not in clues:
-                clues.append(f"[{city}]_ {clue}")          
+                clues.append(f"[{city}]_ {clue}")
             input("Press Enter to continue... ")
             clear()
         elif selection == "3":
@@ -301,12 +313,13 @@ def interrogation_places():
             clue = current_location["Clues_out"][s]
             t_print(f'Witness: "{clue}"\n')
             if clue not in clues:
-                clues.append(f"[{city}]_ {clue}")           
+                clues.append(f"[{city}]_ {clue}")
             input("Press Enter to continue... ")
             clear()
         else:
-            print(f"Selection = {selection}")#Catch-all prints user selection
+            print(f"Selection = {selection}")  # Catch-all print user selection
             exit()
+
 
 def display_clues():
     """
@@ -321,20 +334,22 @@ def display_clues():
             print(f"{i+1}_ {clues[i]}\n")
             time.sleep(0.5)
     return
-    
+
+
 def game_intro():
     """
     Prints a title sequence for the game
     """
     title = """
-     _
-    | \. _  _  _   (~ _  _ _|_ _  _ _  _ _ _  _  _ 
-    |_/|(/_(_|(_)  _)(_|| | | (_|(_(_|| | | |(/_| |
-            _|                                     
-        
-        """
+ _              _                               _
+| \. _  _  _   (  _  _ _|_ _  _ _  _ _ _  _  _   )
+|_/|(/_(_|(_)  _)(_|| | | (_|(_(_|| | | |(/_| | !
+        _|
+"""
+
     description = """
-    At "Where in the world is Diego Santacarmen" you will have to chase the thief around the World collecting clues.
+    At "Where in the world is Diego Santacarmen?" you will have to chase
+    the thief around the World while collecting clues.
     Arrest your suspect before time runs out!
     """
     t_print("Where in the world is...")
@@ -347,8 +362,10 @@ def game_intro():
         time.sleep(.07)
     clear()
     t_print(description)
+    time.sleep(2)
     cursor.show()
     clear()
+
 
 def display_suspects():
     """
@@ -356,7 +373,7 @@ def display_suspects():
     """
     while True:
         t_print("Select a suspect to learn more:\n")
-        options = ["1","2","3","4","5","6","7","8","9","10","11","12","13","r","R"]
+        options = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "r", "R"]
         for i in range(len(suspects)):
             suspect_name = str(suspects[i]["Name"] + ' ' + suspects[i]["Surname"])
             print(f"{i+1}_ {suspect_name}")
@@ -377,6 +394,7 @@ def display_suspects():
             clear()
             continue
 
+
 def travel_options():
     """
     Prints the travel options available to the player and handles the selection made
@@ -385,7 +403,7 @@ def travel_options():
     clear()
     cursor.hide()
     t_print("Please choose your next destination: \n\n")
-    options = ["r","R"]
+    options = ["r", "R"]
     seen = " (Already visited)"
     while True:
         for i in range(len(cities)):
@@ -410,6 +428,7 @@ def travel_options():
             break
     return cities[int(destination)]
 
+
 def countdown():
     """
     Prints a countdown sequence with the time remaining for the game to be over
@@ -424,13 +443,15 @@ def countdown():
             time_remaining -= 1
             time.sleep(1)
 
+
 def arrest(thief):
     """
-    Prints list of suspects and handles user's selection to determine if the arrest is correct.
+    Prints list of suspects and handles user's selection
+    to determine if the arrest is correct.
     """
     t_print(f"Agent {agent}, select a suspect based on your clues to proceed with the arrest:\n\n")
     time.sleep(0.3)
-    options = ["r","R"]
+    options = ["r", "R"]
     while True:
         for i in range(len(suspects)):
             suspect = suspects[i]["Name"] + ' ' + suspects[i]["Surname"]
@@ -438,7 +459,6 @@ def arrest(thief):
             options.append(str(i+1))
         print("R_ Return to the previous screen.")
         selection = input()
-        time.sleep(2)
         if selection not in options:
             clear()
             t_print(f"Your selection is not valid. Please make a valid selection:\n\n")
@@ -446,11 +466,10 @@ def arrest(thief):
         elif selection == 'r' or selection == 'R':
             clear()
             return
-        elif suspects[int(selection)-1] == thief:#Returns 0 if the player selected the correct suspect, 1 otherwise.
+        elif suspects[int(selection)-1] == thief:  # Returns 0 if the player selected the correct suspect, 1 otherwise
             return 0
         else:
-            return 1    
+            return 1
 
 
 main()
-cursor.show()
