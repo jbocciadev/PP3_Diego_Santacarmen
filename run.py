@@ -78,7 +78,7 @@ def main():
             else:
                 continue
         else:
-            t_print(f"Agent {agent}, \nI am afraid you have run out of time and the thief has escaped. \nBetter luck next time!\n")
+            t_print(f"Agent {agent}, \nI am afraid you have run out of time and the thief has escaped and \n{stolen} will never be recovered again! \nBetter luck next time!\n")
             cursor.show()
             finished = True
     cursor.show()
@@ -274,7 +274,7 @@ def interrogation_places():
             give_clues = True
         for i in range(len(options)):
             print(f"{i+1}_ {options[i]}")
-        print("R_ Return to previous screen.")
+        print(f"\nR_ Return to previous screen.")
 
         valid_selections = ["1", "2", "3", "R", "r"]
         selection = input()
@@ -289,36 +289,15 @@ def interrogation_places():
             t_print(f"{choice(no_clue)}\n")
             input("Press Enter to continue... ")
             clear()
-        elif selection == "1":
-            clear()
-            s = int(selection)-1
-            clue = current_location["Clues_out"][s]
-            t_print(f'Witness: "{clue}"\n')
-            if clue not in clues:
-                clues.append(f"[{city}]_ {clue}")
-            input("Press Enter to continue... ")
-            clear()
-        elif selection == "2":
-            clear()
-            s = int(selection)-1
-            clue = current_location["Clues_out"][s]
-            t_print(f'Witness: "{clue}"\n')
-            if clue not in clues:
-                clues.append(f"[{city}]_ {clue}")
-            input("Press Enter to continue... ")
-            clear()
-        elif selection == "3":
-            clear()
-            s = int(selection)-1
-            clue = current_location["Clues_out"][s]
-            t_print(f'Witness: "{clue}"\n')
-            if clue not in clues:
-                clues.append(f"[{city}]_ {clue}")
-            input("Press Enter to continue... ")
-            clear()
         else:
-            print(f"Selection = {selection}")  # Catch-all print user selection
-            exit()
+            clear()
+            s = int(selection)-1
+            clue = current_location["Clues_out"][s]
+            t_print(f'Witness: "{clue}"\n')
+            if clue not in clues:
+                clues.append(f"[{city}]_ {clue}")
+            input("Press Enter to continue... ")
+            clear()
 
 
 def display_clues():
