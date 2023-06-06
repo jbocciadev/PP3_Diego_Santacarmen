@@ -32,7 +32,7 @@ def main():
         agent = input(f"Identify yourself, agent!\nWhat is your name?\n")
         clear()
         if agent == "":
-            print("You don't have a name?")
+            print("You don't have a name? That is suspicious...")
             time.sleep(2)
             continue
         else:
