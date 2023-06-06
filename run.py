@@ -13,6 +13,8 @@ def main():
     cities = load_cities()
     suspects = load_suspects()
     thief = select_thief()
+    print(thief)
+    time.sleep(2)
     thief_clues = generate_thief_clues(thief)
     no_clue = ["I don't think I have seen anyone with that description.",
     "I'm sorry agent, but that doesn't ring a bell at all!","I can't help you, sorry!","Have you seen my cat? He is orange and wears a black collar","One potato, two potatoes"]
@@ -64,8 +66,19 @@ def main():
                     visited.add(current_location["Name"])
                     countdown()
                 p = 0                
+            elif p == 6:
+                suspect = arrest(thief)
+                if suspect == 0:
+                    clear()
+                    t_print(f"Congratulations, agent {agent}. You have caught the thief and {stolen} has been recovered successfully \nAnother case solved!\n")
+                    cursor.show()
+                    finished = True
+                else:
+                    clear()
+                    t_print(f"Agent {agent}. I regret to inform you that you have not caught the right suspect. The thief has now run away and {stolen} will never be recovered again!\n")
+                    break
             else:
-                pass
+                continue
         else:
             t_print(f"Agent {agent}! I am afraid you have run out of time and the thief has escaped. \nBetter luck next time!\n")
             cursor.show()
@@ -228,6 +241,8 @@ def destination_options():
         p = 4
     elif selection == "5":
         p = 5
+    elif selection == "6":
+        p = 6
     else:
         print(f"You have selected '{selection}'. Please, make a valid selection")
         time.sleep(2)
@@ -308,7 +323,8 @@ def display_clues():
     else:
         t_print(f"Clues collected:\n")
         for i in range(c_len):
-            t_print(f"{i+1}_ {clues[i]}\n")
+            print(f"{i+1}_ {clues[i]}\n")
+            time.sleep(0.3)
     return
     
 def game_intro():
@@ -324,7 +340,7 @@ def game_intro():
                /____/                                                                                
 """
     description = """
-    At "Where in the world is Diego Santacarmen you will have to chase the thief around the World collecting clues.
+    At "Where in the world is Diego Santacarmen" you will have to chase the thief around the World collecting clues.
     Arrest your suspect before time runs out!
     """
     t_print("Where in the world is...")
@@ -332,7 +348,7 @@ def game_intro():
     time.sleep(1)
     print(title)
     time.sleep(2)
-    for i in range(20):
+    for i in range(30):
         print("")
         time.sleep(.07)
     clear()
@@ -412,7 +428,36 @@ def countdown():
             print(f"Time remaining: {time_remaining} hours.")
             time_remaining -= 1
             time.sleep(1)
-        
+
+def arrest(thief):
+    """
+    Prints list of suspects and handles user's selection to determine if the arrest is correct.
+    """
+    t_print(f"Agent {agent}, select a suspect based on your clues to proceed with the arrest:\n\n")
+    time.sleep(0.3)
+    options = ["r","R"]
+    while True:
+        for i in range(len(suspects)):
+            suspect = suspects[i]["Name"] + ' ' + suspects[i]["Surname"]
+            print(f"{i+1}_ {suspect}")
+            options.append(str(i+1))
+        print("R_ Return to the previous screen.")
+        selection = input()
+        print(suspects[int(selection)-1])
+        print(thief)
+        time.sleep(2)
+        if selection not in options:
+            clear()
+            t_print(f"Your selection is not valid. Please make a valid selection:\n\n")
+            continue
+        elif selection == 'r' or selection == 'R':
+            clear()
+            return
+        elif suspects[int(selection)-1] == thief:
+            return 0
+        else:
+            return 1    
 
 
 main()
+cursor.show()
