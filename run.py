@@ -1,6 +1,5 @@
 import os, time, csv, cursor
 from random import shuffle, choice
-from pprint import pprint
 
 def main():
     """

@@ -1,1 +1,1 @@
-# Your requirements go here
+cursor==1.3.5
