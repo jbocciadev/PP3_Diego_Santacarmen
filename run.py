@@ -28,7 +28,15 @@ def main():
     game_intro()
     input("Press Enter to continue... ")
     clear()
-    agent = input(f"Identify yourself, agent!\nWhat is your name?\n")
+    while True:
+        agent = input(f"Identify yourself, agent!\nWhat is your name?\n")
+        clear()
+        if agent == "":
+            print("You don't have a name?")
+            time.sleep(2)
+            continue
+        else:
+            break
     intro_sequence(agent, victim_location, stolen)
     travel("Headquarters", victim['Name'])
     current_location = victim
@@ -356,7 +364,7 @@ def display_suspects():
         for i in range(len(suspects)):
             suspect_name = str(suspects[i]["Name"] + ' ' + suspects[i]["Surname"])
             print(f"{i+1}_ {suspect_name}")
-        print("R_ Return to previous screen.")
+        print(f"\nR_ Return to previous screen.")
         selection = input()
         if selection == "r" or selection == "R":
             return
@@ -394,7 +402,7 @@ def travel_options():
                 city += seen
             print(f"{i}_ {city}")
             options.append(str(i))
-        print("R_ Return to the previous screen.")
+        print(f"\nR_ Return to the previous screen.")
 
         destination = input()
         if destination == "r" or destination == "R":
