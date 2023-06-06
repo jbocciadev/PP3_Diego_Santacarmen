@@ -327,13 +327,12 @@ def game_intro():
     Prints a title sequence for the game
     """
     title = """
-      ____  _                     _____             __                                           ___ 
-     / __ \(_)__  ____ _____     / ___/____ _____  / /_____ __________ __________ ___  ___  ____/__ |
-    / / / / / _ \/ __ `/ __ \    \__ \/ __ `/ __ \/ __/ __ `/ ___/ __ `/ ___/ __ `__ \/ _ \/ __ \/ _/
-   / /_/ / /  __/ /_/ / /_/ /   ___/ / /_/ / / / / /_/ /_/ / /__/ /_/ / /  / / / / / /  __/ / / /_/  
-  /_____/_/\___/\__, /\____/   /____/\__,_/_/ /_/\__/\__,_/\___/\__,_/_/  /_/ /_/ /_/\___/_/ /_(_)   
-               /____/                                                                                
-"""
+     _
+    | \. _  _  _   (~ _  _ _|_ _  _ _  _ _ _  _  _ 
+    |_/|(/_(_|(_)  _)(_|| | | (_|(_(_|| | | |(/_| |
+            _|                                     
+        
+        """
     description = """
     At "Where in the world is Diego Santacarmen" you will have to chase the thief around the World collecting clues.
     Arrest your suspect before time runs out!
@@ -349,6 +348,7 @@ def game_intro():
     clear()
     t_print(description)
     cursor.show()
+    clear()
 
 def display_suspects():
     """
