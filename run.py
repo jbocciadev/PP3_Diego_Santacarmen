@@ -15,8 +15,13 @@ def main():
     suspects = load_suspects()
     thief = select_thief()
     thief_clues = generate_thief_clues(thief)
-    no_clue = ["I don't think I have seen anyone with that description.",
-        "I'm sorry agent, but that doesn't ring a bell at all!", "I can't help you, sorry!", "Have you seen my cat? He is orange and wears a black collar", "One potato, two potatoes"]
+    no_clue = [
+        "I don't think I have seen anyone with that description.",
+        "I'm sorry agent, but that doesn't ring a bell at all!",
+        "I can't help you, sorry!",
+        "Have you seen my cat? He is orange and wears a black collar",
+        "One potato, two potatoes"
+    ]
     visited, clues = set(), []
     victim = select_victim()
     visited.add(victim["Name"])
@@ -29,7 +34,7 @@ def main():
     input("Press Enter to continue... ")
     clear()
     while True:
-        agent = input(f"Identify yourself, agent!\nWhat is your name?\n")
+        agent = input(f"Identify yourself, agent!\nWhat is your name?\n").strip()
         clear()
         if agent == "":
             print("You don't have a name? That is suspicious...")
@@ -235,10 +240,20 @@ def display_destination(destination):
 
 def destination_options():
     """
-    Display main screen for the current location's options available to the player.
-    Handles the user's selection and passes on to the next iteration of the outer loop having modified the value of var "p".
+    Display main screen for the current location's
+    options available to the player.
+
+    Handles the user's selection and passes on
+    to the next iteration of the outer loop having modified the value of var "p".
     """
-    options = ["Learn more about this place.", "Interrogate witnesses.", "View my clues.", "View the usual suspects.", "Travel.", "Arrest suspect!"]
+    options = [
+        "Learn more about this place.",
+        "Interrogate witnesses.",
+        "View my clues.",
+        "View the usual suspects.",
+        "Travel.",
+        "Arrest suspect!"
+    ]
     t_print(f"What do you want to do next, agent {agent}?\n\n")
     for i in range(len(options)):
         print(f"{i+1}_ {options[i]}")
@@ -268,7 +283,9 @@ def interrogation_places():
     """
     Loads options of landmarks for user to choose.
     Checks if user arrived following clues or travelled to wrong city.
-    Displays real clues if user arrived correctly, or obviously useless clues if arrived incorrectly.
+
+    Displays real clues if user arrived correctly,
+    or obviously useless clues if arrived incorrectly.
     """
 
     while True:
@@ -282,7 +299,7 @@ def interrogation_places():
             give_clues = True
         for i in range(len(options)):
             print(f"{i+1}_ {options[i]}")
-        print(f"\nR_ Return to previous screen.")
+        print("\nR_ Return to previous screen.")
 
         valid_selections = ["1", "2", "3", "R", "r"]
         selection = input()
@@ -294,7 +311,7 @@ def interrogation_places():
             return
         elif give_clues is False:  # Prints bogus clue
             clear()
-            t_print(f"{choice(no_clue)}\n")
+            t_print(f'Witness: "{choice(no_clue)}\n"')
             input("Press Enter to continue... ")
             clear()
         else:
