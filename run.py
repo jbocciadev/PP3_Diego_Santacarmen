@@ -82,7 +82,6 @@ def main():
                 if suspect == 0:
                     clear()
                     t_print(f"Congratulations, agent {agent}! \nYou have caught the thief and \n{stolen} has been recovered successfully! \nAnother case solved!\n")
-                    cursor.show()
                     finished = True
                 else:
                     clear()
@@ -92,9 +91,26 @@ def main():
                 continue
         else:
             t_print(f"Agent {agent}, \nI am afraid you have run out of time and the thief has escaped and \n{stolen} will never be recovered again! \nBetter luck next time!\n")
-            cursor.show()
             finished = True
+    time.sleep(1.5)
     cursor.show()
+    clear()
+    while True:        
+        cont = input("Would you like to have another go? (Y/N)\n").strip().upper()
+        if cont == "" or cont not in ["Y", "N"]:
+            clear()
+            print(f"'{cont}' is not a valid option.")
+            continue
+        elif cont == "N":
+            print("Bye!")
+            time.sleep(2)
+            clear()
+            exit()
+        else:
+            main()
+
+
+
 
 
 """ ###################### AUXILIARY FUNCTIONS #################################### """
@@ -331,9 +347,9 @@ def display_clues():
     """
     c_len = len(clues)
     if c_len == 0:
-        t_print(f"You have collected no clues yet.\n")
+        t_print("You have collected no clues yet.\n")
     else:
-        t_print(f"Clues collected:\n\n")
+        t_print("Clues collected:\n\n")
         for i in range(c_len):
             print(f"{i+1}_ {clues[i]}\n")
             time.sleep(0.5)
@@ -419,7 +435,7 @@ def travel_options():
                 city += seen
             print(f"{i}_ {city}")
             options.append(str(i))
-        print(f"\nR_ Return to the previous screen.")
+        print("\nR_ Return to the previous screen.")
 
         destination = input()
         if destination == "r" or destination == "R":
@@ -470,7 +486,8 @@ def arrest(thief):
         elif selection == 'r' or selection == 'R':
             clear()
             return
-        elif suspects[int(selection)-1] == thief:  # Returns 0 if the player selected the correct suspect, 1 otherwise
+        elif suspects[int(selection)-1] == thief:  
+            # Returns 0 if the player selected the correct suspect, 1 otherwise
             return 0
         else:
             return 1
