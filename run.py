@@ -1,8 +1,10 @@
+from random import choice
 import cursor
-from random import shuffle, choice
 from auxiliary import (sleep, t_print, clear,
                        travel, load_cities, load_suspects,
-                       no_clue)
+                       no_clue, select_victim, get_agent,
+                       create_escape_route, select_thief,
+                       generate_thief_clues)
 
 
 def game():
@@ -10,9 +12,10 @@ def game():
     Main function that initiates and calls different functions in sequence.
     """
 
-    #title_sequence()
+    title_sequence()
 
     agent = get_agent()
+
     cities = load_cities()
     victim = select_victim(cities)
     suspects = load_suspects()
@@ -22,12 +25,15 @@ def game():
     visited = {victim["Name"]}
     victim_location = f"{victim['Name']}, {victim['Country']}"
     stolen = choice(victim['Item'])
+
     intro_sequence(agent, victim_location, stolen)
+
     travel("Headquarters", victim['Name'])
     current_location = victim
+
     game_result = run_game(current_location, suspects, cities, thief, no_clue, visited, agent)
     game_end(game_result, agent, stolen)
-    replay_game()
+    replay_game()()
 
 
 def replay_game():
@@ -50,7 +56,7 @@ def replay_game():
             exit()
         else:
             clear()
-            main()
+            game()
 
 
 def game_end(game_result, agent, stolen):
@@ -79,87 +85,6 @@ The thief has escaped and {stolen} will never be recovered again!
 Better luck next time!
 """.format(agent = agent, stolen = stolen)
         t_print(f"{message}")
-
-
-def get_agent():
-    input("Press Enter to continue... ")
-    clear()
-    while True:
-        agent = input("Identify yourself, agent!\nWhat is your name?\n").strip()
-        clear()
-        if agent == "":
-            print("You don't have a name? That is suspicious...")
-            sleep(2)
-            continue
-        else:
-            break
-    return agent
-
-
-def select_victim(cities):
-    """
-    Shuffles list of cities and returns the first one as the victim.
-    """
-    shuffle(cities)
-    victim = cities[0]
-    return victim
-
-
-def create_escape_route(victim, cities, thief_clues):
-    """
-    Iterates through the list of cities and adds them to a new list (escape_route). Also adds clues of city i into city i-1 dict object
-    to allow the system to present clues to the user.
-    """
-    route = [victim["Name"]]
-    victim["Previous"] = ""
-    for i in range(len(cities)):
-        if cities[i]["Name"] not in route:
-            route.append(cities[i]["Name"])
-            cities[i-1]["Clues_out"] = cities[i]["Clues_in"]
-            cities[i-1]["Clues_out"].append(choice(thief_clues))
-            shuffle(cities[i-1]["Clues_out"])
-            cities[i]["Previous"] = cities[i-1]["Name"]
-        else:
-            continue
-    shuffle(cities)
-    return route
-
-
-def select_thief(suspects):
-    """
-    Shuffles list of suspects and returns the first one as the thief.
-    """
-    thief = choice(suspects)
-    return thief
-
-
-def generate_thief_clues(thief):
-    """
-    Creates and returns list of thief-specific clues for the user to read, based on values in object.
-    """
-    clues = []
-    feature = thief["Feature"]
-    profession = thief["Profession"]
-    eyes = thief["Eyes"]
-    if thief["Gender"] == "male":
-        pron = "he"
-    else:
-        pron = "she"
-    clues.append(f"I saw the thief! {pron.capitalize()} had {thief['Hair']} hair.")
-    if feature[0] == "a":
-        clues.append(f"I saw {pron} had {feature}.")
-    else:
-        clues.append(f"I figured {pron} {feature}.")
-    clues.append(f"Judging by the way {pron} was talking, I'm sure {pron} would have been a {profession}, or something similar.")
-    clues.append(f"The person you are looking for has {eyes} eyes.")
-    shuffle(clues)
-    return clues
-
-
-
-
-
-
 
 
 def intro_sequence(user, victim_location, stolen):
