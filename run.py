@@ -5,7 +5,7 @@ from time import sleep
 from random import shuffle, choice
 
 
-def main():
+def game():
     """
     Main function that initiates and calls different functions in sequence.
     """
@@ -26,7 +26,7 @@ def main():
         "Have you seen my cat? He is orange and wears a black collar",
         "One potato, two potatoes"
     ]
-    visited = set(victim["Name"])    
+    visited = {victim["Name"]}
     victim_location = f"{victim['Name']}, {victim['Country']}"
     stolen = choice(victim['Item'])
     intro_sequence(agent, victim_location, stolen)
@@ -473,7 +473,7 @@ def arrest(thief, suspects, agent):
         elif selection == 'r' or selection == 'R':
             clear()
             return
-        elif suspects[int(selection)-1] == thief:  
+        elif suspects[int(selection)-1] == thief:
             # Returns 0 if the player selected the correct suspect, 1 otherwise
             return 0
         else:
@@ -528,7 +528,7 @@ def run_game(current_location, suspects, cities, thief, no_clue, visited, agent)
                 result = arrest(thief, suspects, agent)
                 if result == 0:
                     finished = True
-                    return 0                    
+                    return 0
                 else:
                     finished = True
                     return 1
@@ -536,4 +536,5 @@ def run_game(current_location, suspects, cities, thief, no_clue, visited, agent)
             return 2
             finished = True
 
-main()
+if __name__ == '__main__':
+    game()
