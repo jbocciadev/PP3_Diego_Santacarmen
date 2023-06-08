@@ -6,15 +6,15 @@ from auxiliary import (sleep, t_print, clear,
                        create_escape_route, select_thief,
                        generate_thief_clues)
 
+def intro():
+    title_sequence()
+    agent = get_agent()
+    return agent
 
-def game():
+def game(agent):
     """
     Main function that initiates and calls different functions in sequence.
     """
-
-    title_sequence()
-
-    agent = get_agent()
 
     cities = load_cities()
     victim = select_victim(cities)
@@ -33,10 +33,10 @@ def game():
 
     game_result = run_game(current_location, suspects, cities, thief, no_clue, visited, agent)
     game_end(game_result, agent, stolen)
-    replay_game()()
+    replay_game(agent)
 
 
-def replay_game():
+def replay_game(agent):
     """
     Invites the player to play again
     """
@@ -56,7 +56,7 @@ def replay_game():
             exit()
         else:
             clear()
-            game()
+            game(agent)
 
 
 def game_end(game_result, agent, stolen):
@@ -404,5 +404,7 @@ def run_game(current_location, suspects, cities, thief, no_clue, visited, agent)
             return 2
             finished = True
 
+
 if __name__ == '__main__':
-    game()
+    agent = intro()
+    game(agent)
