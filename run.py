@@ -1,8 +1,8 @@
 import cursor
-from csv import DictReader
-from os import system
-from time import sleep
 from random import shuffle, choice
+from auxiliary import (sleep, t_print, clear,
+                       travel, load_cities, load_suspects,
+                       no_clue)
 
 
 def game():
@@ -10,7 +10,7 @@ def game():
     Main function that initiates and calls different functions in sequence.
     """
 
-    title_sequence()
+    #title_sequence()
 
     agent = get_agent()
     cities = load_cities()
@@ -19,13 +19,6 @@ def game():
     thief = select_thief(suspects)
     thief_clues = generate_thief_clues(thief)
     create_escape_route(victim, cities, thief_clues)
-    no_clue = [
-        "I don't think I have seen anyone with that description.",
-        "I'm sorry agent, but that doesn't ring a bell at all!",
-        "I can't help you, sorry!",
-        "Have you seen my cat? He is orange and wears a black collar",
-        "One potato, two potatoes"
-    ]
     visited = {victim["Name"]}
     victim_location = f"{victim['Name']}, {victim['Country']}"
     stolen = choice(victim['Item'])
@@ -88,14 +81,6 @@ Better luck next time!
         t_print(f"{message}")
 
 
-def clear():
-    """
-    Clears the terminal.
-    See https://stackoverflow.com/questions/517970/how-to-clear-the-interpreter-console
-    """
-    system("clear")
-
-
 def get_agent():
     input("Press Enter to continue... ")
     clear()
@@ -109,33 +94,6 @@ def get_agent():
         else:
             break
     return agent
-
-
-def load_cities():
-    """
-    Opens cities.csv file and returns list of dict elements with all cities in the file.
-    """
-    with open("cities.csv", encoding='utf-8-sig') as cities_file:
-        cities = DictReader(cities_file, delimiter=',')
-        c_list = []
-        for city in cities:
-            city["Landmarks"] = city["Landmarks"].split(",")
-            city["Item"] = city["Item"].split(",")
-            city["Clues_in"] = city["Clues_in"].split(",")
-            c_list.append(city)
-    return c_list
-
-
-def load_suspects():
-    """
-    Opens suspects.csv file and returns list of dict elements with all suspects in the file.
-    """
-    with open("suspects.csv", encoding='utf-8-sig') as suspects_file:
-        suspects = DictReader(suspects_file, delimiter=',')
-        s_list = []
-        for suspect in suspects:
-            s_list.append(suspect)
-        return s_list
 
 
 def select_victim(cities):
@@ -198,25 +156,10 @@ def generate_thief_clues(thief):
     return clues
 
 
-def travel(origin, destination):
-    """
-    prints a sequence simulating the waiting time of a trip to the destination.
-    """
-    trip = [".         ", " .        ", "  .       ", "   .      ", "    .     ", "     .    ", "      .   ", "       .  ", "        . ", "         ."]
-    for i in range(10):
-        clear()
-        print(f"{origin}{trip[i]}{destination}")
-        sleep(0.3)
-        cursor.hide()
 
 
-def t_print(message):
-    """
-    Prints the passed string to the console, simulating a typewriter.
-    """
-    for char in message:
-        sleep(0.05)
-        print(char, end='', flush=True)
+
+
 
 
 def intro_sequence(user, victim_location, stolen):
