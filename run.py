@@ -7,14 +7,18 @@ from random import shuffle, choice
 
 def main():
     """
-    Main function that controls the flow of the game in sequence.
+    Main function that initiates and calls different functions in sequence.
     """
-    finished = False
-    
+
+    title_sequence()
+
+    agent = get_agent()
     cities = load_cities()
+    victim = select_victim(cities)
     suspects = load_suspects()
     thief = select_thief(suspects)
     thief_clues = generate_thief_clues(thief)
+    create_escape_route(victim, cities, thief_clues)
     no_clue = [
         "I don't think I have seen anyone with that description.",
         "I'm sorry agent, but that doesn't ring a bell at all!",
@@ -22,41 +26,21 @@ def main():
         "Have you seen my cat? He is orange and wears a black collar",
         "One potato, two potatoes"
     ]
-    visited = set()
-    victim = select_victim(cities)
-    visited.add(victim["Name"])
-    escape_route = create_escape_route(victim, cities, thief_clues)
+    visited = set(victim["Name"])    
     victim_location = f"{victim['Name']}, {victim['Country']}"
     stolen = choice(victim['Item'])
-    clear()
-    game_intro()
-    input("Press Enter to continue... ")
-    clear()
-    while True:
-        agent = input("Identify yourself, agent!\nWhat is your name?\n").strip()
-        clear()
-        if agent == "":
-            print("You don't have a name? That is suspicious...")
-            sleep(2)
-            continue
-        else:
-            break
     intro_sequence(agent, victim_location, stolen)
     travel("Headquarters", victim['Name'])
     current_location = victim
-
     game_result = run_game(current_location, suspects, cities, thief, no_clue, visited, agent)
-
-    if game_result == 0:
-        clear()
-        t_print(f"Congratulations, agent {agent}! \nYou have caught the thief and \n{stolen} has been recovered successfully! \nAnother case solved!\n")
-    elif game_result == 1:
-        clear()
-        t_print(f"Agent {agent}, \nI regret to inform you that you have not caught the right suspect.\n The thief has now run away and \n{stolen} will never be recovered again!\n")
-    elif game_result == 2:
-        t_print(f"Agent {agent}, \nI am afraid you have run out of time, the thief has escaped and \n{stolen} will never be recovered again! \nBetter luck next time!\n")
+    game_end(game_result, agent, stolen)
+    replay_game()
 
 
+def replay_game():
+    """
+    Invites the player to play again
+    """
     sleep(1.5)
     cursor.show()
     clear()
@@ -72,13 +56,36 @@ def main():
             clear()
             exit()
         else:
+            clear()
             main()
 
 
-
-
-
-""" ###################### AUXILIARY FUNCTIONS #################################### """
+def game_end(game_result, agent, stolen):
+    """
+    Based on game outcome, displays a different message to the player.
+    """
+    if game_result == 0:
+        clear()
+        message = """Congratulations, agent {agent}!
+You have caught the thief and {stolen} has been recovered successfully!
+Another case solved!
+""".format(agent = agent, stolen = stolen)
+        t_print(f"{message}")
+    elif game_result == 1:
+        clear()
+        message = """Agent {agent},
+I regret to inform you that you have not caught the right suspect.
+The thief has now run away and {stolen} will never be recovered again!
+Better luck next time!
+""".format(agent = agent, stolen = stolen)
+        t_print(f"{message}")
+    elif game_result == 2:
+        message = """Agent {agent},
+I am afraid you have run out of time.
+The thief has escaped and {stolen} will never be recovered again!
+Better luck next time!
+""".format(agent = agent, stolen = stolen)
+        t_print(f"{message}")
 
 
 def clear():
@@ -87,6 +94,21 @@ def clear():
     See https://stackoverflow.com/questions/517970/how-to-clear-the-interpreter-console
     """
     system("clear")
+
+
+def get_agent():
+    input("Press Enter to continue... ")
+    clear()
+    while True:
+        agent = input("Identify yourself, agent!\nWhat is your name?\n").strip()
+        clear()
+        if agent == "":
+            print("You don't have a name? That is suspicious...")
+            sleep(2)
+            continue
+        else:
+            break
+    return agent
 
 
 def load_cities():
@@ -321,7 +343,7 @@ def display_clues(clues):
     return
 
 
-def game_intro():
+def title_sequence():
     """
     Prints a title sequence for the game
     """
@@ -337,6 +359,7 @@ def game_intro():
     the thief around the World while collecting clues.
     Arrest your suspect before time runs out!
     """
+    clear()
     t_print("Where in the world is...")
     cursor.hide()
     sleep(1)
@@ -458,6 +481,14 @@ def arrest(thief, suspects, agent):
 
 
 def run_game(current_location, suspects, cities, thief, no_clue, visited, agent):
+    """
+    Main game function, loops constantly and displays a different
+    set of options depending on the value of p.
+
+    Returns 0 if the thief is caught,
+    1 if the caught suspect was not the thief and
+    2 if time has run out.
+    """
     p = 0   # p is the variable that controls the flow of the game.
     time_remaining = 24
     clues = []
