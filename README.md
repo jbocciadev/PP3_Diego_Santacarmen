@@ -184,7 +184,7 @@ git stash
 ## __Deployment__
 The application has been deployed to heroku. The steps taken were:
 
-In heroku (https://dashboard.heroku.com/apps): 
+In [heroku](https://dashboard.heroku.com/apps): 
     
   1. Open the "new" menu and click on "Create new app".
   2. Fill form fields with app name and region (Europe). Click on "Create app".
@@ -214,5 +214,7 @@ In heroku (https://dashboard.heroku.com/apps):
 
 ### Other
 - First and foremost, I owe gratitude to my family for dinners without me and days out I missed because I needed to sit and work on this project. Their support has always been unwavering.
+
 - A masive thank you to my mentor, Spencer and his [5pence](https://5pence.net/) site.
+
 - Thank you, thank you, thank you to the staff and colleagues at [Code Institute](https://codeinstitute.net). Course content, Tutoring sessions and (especially) Slack channels.
