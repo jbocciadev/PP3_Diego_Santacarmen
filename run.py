@@ -182,7 +182,7 @@ def interrogation_places(no_clue, current_location, clues, visited):
             return clues
         elif give_clues is False:  # Prints bogus clue
             clear()
-            t_print(f'Witness: "{choice(no_clue)}\n"')
+            t_print(f'Witness: "{choice(no_clue)}"\n')
             input("Press Enter to continue... ")
             clear()
         else:
