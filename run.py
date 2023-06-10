@@ -225,6 +225,9 @@ def title_sequence():
     Prints a title sequence for the game
     """
     title = """
+
+
+    
  _              _                               _
 | \. _  _  _   (  _  _ _|_ _  _ _  _ _ _  _  _   )
 |_/|(/_(_|(_)  _)(_|| | | (_|(_(_|| | | |(/_| | !
