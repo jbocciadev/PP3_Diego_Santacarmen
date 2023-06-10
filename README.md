@@ -9,7 +9,7 @@ The player will have to chase the thief while collecting clues and arrest the ri
 ![Responsive Mockup](/assets/media/pp3_diego_santacarmen_resp.PNG)
 
 ## The game
-The player is presented with the facts of the case and sent to the crime scene. There, they will have to interrogate the suspects and follow the clues to either make an arrest, or travel to the next location where they will gather further clues. 
+The player is presented with the facts of the case and sent to the crime scene. There, they will have to interrogate the witnesses and follow the clues to either make an arrest, or travel to the next location where they will gather further clues. 
 
 ## Features
 
@@ -50,7 +50,7 @@ The player is presented with the facts of the case and sent to the crime scene. 
 
     ![Screenshot of clues](/assets/media/clues_capture.PNG)
   
-  - Watch out! If the player doesn't travel to the correct location, the clues they will receive from witnesses will be completely useless and they will have to travel back to the previous location, wasting precious time.
+  - __Watch out!__ If the player doesn't travel to the correct location, the clues they will receive from witnesses will be completely useless and they will have to travel back to the previous location, wasting precious time.
 
     ![Screenshot of bogus clue](/assets/media/bogus.PNG)
   
@@ -77,9 +77,33 @@ The player is presented with the facts of the case and sent to the crime scene. 
 
     ![Screenshot of thief caught](/assets/media/thief_caught.PNG)
 
-  - As an additional feature, at the end of every game the player is presented with the option to start a new game, with a randomly selected thief, victim, etc.:
+  - As an additional feature, at the end of every game the player is presented with the option to start a new game, with a randomly selected thief, victim, etc. In the case of running a new game in this fashion, the game will skip the title sequence and remember the player's name:
     
     ![Screenshot of replay](/assets/media/replay.PNG)
+
+## Under the Proverbial Hood
+
+  - ### __Game Flowchart__
+
+    > See below flowchart with the outline of the game logic:
+    ![Game Flowchart](/assets/media/pp3_diego_santacarmen_flowchart.jpg)
+
+
+## Future Development Opportunities
+
+  - ### Here are some future implementations that were left for a further version:
+    
+    - __Rank promotion/demotion__: A reward-punishment logic can be implemented for every case resolution/failure so the player can ascend or fall in the ranks from traffic duty agent to Captain or Superintendent.
+
+    - __Leaderboard__: building on the previous point, a leaderboard, could be implemented with the different players and their ranks.
+
+    - __Coloured fonts/imagery__: as a visual improvement, colours can be implemented for the different sections/headings within the game, along with images/animations to be displayed.
+
+## Testing and known issues
+
+  - ### __Testing__
+
+    
 
 
 ---------------########### CONTINUE HERE #########----------------

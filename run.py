@@ -6,10 +6,12 @@ from auxiliary import (sleep, t_print, clear,
                        create_escape_route, select_thief,
                        generate_thief_clues)
 
+
 def intro():
     title_sequence()
     agent = get_agent()
     return agent
+
 
 def game(agent):
     """
@@ -31,7 +33,10 @@ def game(agent):
     travel("Headquarters", victim['Name'])
     current_location = victim
 
-    game_result = run_game(current_location, suspects, cities, thief, no_clue, visited, agent)
+    game_result = run_game(
+                    current_location, suspects,
+                    cities, thief, no_clue, visited, agent)
+
     game_end(game_result, agent, stolen)
     replay_game(agent)
 
@@ -43,8 +48,9 @@ def replay_game(agent):
     sleep(1.5)
     cursor.show()
     clear()
-    while True:        
-        cont = input("Would you like to have another go? (Y/N)\n").strip().upper()
+    while True:
+        cont = input(
+                "Would you like to have another go? (Y/N)\n").strip().upper()
         if cont == "" or cont not in ["Y", "N"]:
             clear()
             print(f"'{cont}' is not a valid option.")
@@ -68,7 +74,7 @@ def game_end(game_result, agent, stolen):
         message = """Congratulations, agent {agent}!
 You have caught the thief and {stolen} has been recovered successfully!
 Another case solved!
-""".format(agent = agent, stolen = stolen)
+""".format(agent=agent, stolen=stolen)
         t_print(f"{message}")
     elif game_result == 1:
         clear()
@@ -76,23 +82,25 @@ Another case solved!
 I regret to inform you that you have not caught the right suspect.
 The thief has now run away and {stolen} will never be recovered again!
 Better luck next time!
-""".format(agent = agent, stolen = stolen)
+""".format(agent=agent, stolen=stolen)
         t_print(f"{message}")
     elif game_result == 2:
         message = """Agent {agent},
 I am afraid you have run out of time.
 The thief has escaped and {stolen} will never be recovered again!
 Better luck next time!
-""".format(agent = agent, stolen = stolen)
+""".format(agent=agent, stolen=stolen)
         t_print(f"{message}")
 
 
 def intro_sequence(user, victim_location, stolen):
     """
-    Prints sequence introducing the user to the game and into the case to solve.
+    Prints sequence introducing the user
+    to the game and into the case to solve.
     """
     clear()
-    t_print(f"Agent {user}, we have received a report from {victim_location} that {stolen} has been stolen.\n")
+    t_print(
+        f"Agent {user}, we have received a report from {victim_location} that {stolen} has been stolen.\n")
     sleep(1.5)
     t_print("You have 24 hours to catch the culprit.\n")
     sleep(1.5)
@@ -116,7 +124,8 @@ def destination_options(p, agent):
     options available to the player.
 
     Handles the user's selection and passes on
-    to the next iteration of the outer loop having modified the value of var "p".
+    to the next iteration of the outer loop
+    having modified the value of var "p".
     """
     options = [
         "Learn more about this place.",
@@ -130,7 +139,7 @@ def destination_options(p, agent):
     for i in range(len(options)):
         print(f"{i+1}_ {options[i]}")
     cursor.show()
-    selection = input()
+    selection = input().strip()
     clear()
     if selection == "1":
         p = 1
@@ -173,7 +182,7 @@ def interrogation_places(no_clue, current_location, clues, visited):
         print("\nR_ Return to previous screen.")
 
         valid_selections = ["1", "2", "3", "R", "r"]
-        selection = input()
+        selection = input().strip()
         if selection not in valid_selections:
             clear()
             print(f"You have selected {selection}. This is not a valid option. Please, select a valid option:")
@@ -249,12 +258,18 @@ def display_suspects(suspects):
     """
     while True:
         t_print("Select a suspect to learn more:\n")
-        options = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "r", "R"]
+        options = [
+            "1", "2", "3", "4", "5",
+            "6", "7", "8", "9", "10",
+            "11", "12", "13", "r", "R"]
+
         for i in range(len(suspects)):
-            suspect_name = str(suspects[i]["Name"] + ' ' + suspects[i]["Surname"])
+            suspect_name = str(
+                suspects[i]["Name"] + ' ' + suspects[i]["Surname"])
+
             print(f"{i+1}_ {suspect_name}")
         print(f"\nR_ Return to previous screen.")
-        selection = input()
+        selection = input().strip()
         if selection == "r" or selection == "R":
             return
         elif selection not in options:
@@ -273,8 +288,10 @@ def display_suspects(suspects):
 
 def travel_options(cities, visited, current_location):
     """
-    Prints the travel options available to the player and handles the selection made
+    Prints the travel options available
+    to the player and handles the selection made
     """
+
     clear()
     cursor.hide()
     t_print("Please choose your next destination: \n\n")
@@ -292,7 +309,7 @@ def travel_options(cities, visited, current_location):
             options.append(str(i))
         print("\nR_ Return to the previous screen.")
 
-        destination = input()
+        destination = input()strip()
         if destination == "r" or destination == "R":
             return current_location
         elif destination not in options:
@@ -333,7 +350,7 @@ def arrest(thief, suspects, agent):
             print(f"{i+1}_ {suspect}")
             options.append(str(i+1))
         print("R_ Return to the previous screen.")
-        selection = input()
+        selection = input().strip()
         if selection not in options:
             clear()
             t_print(f"Your selection is not valid. Please select a valid option:\n\n")
@@ -348,7 +365,9 @@ def arrest(thief, suspects, agent):
             return 1
 
 
-def run_game(current_location, suspects, cities, thief, no_clue, visited, agent):
+def run_game(
+            current_location, suspects,
+            cities, thief, no_clue, visited, agent):
     """
     Main game function, loops constantly and displays a different
     set of options depending on the value of p.
@@ -374,7 +393,9 @@ def run_game(current_location, suspects, cities, thief, no_clue, visited, agent)
                 p = 0
                 clear()
             elif p == 2:
-                clues = interrogation_places(no_clue, current_location, clues, visited)
+                clues = interrogation_places(
+                    no_clue, current_location, clues, visited)
+
                 p = 0
                 clear()
             elif p == 3:
