@@ -309,7 +309,7 @@ def travel_options(cities, visited, current_location):
             options.append(str(i))
         print("\nR_ Return to the previous screen.")
 
-        destination = input()strip()
+        destination = input().strip()
         if destination == "r" or destination == "R":
             return current_location
         elif destination not in options:
