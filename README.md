@@ -193,26 +193,24 @@ In heroku (https://dashboard.heroku.com/apps):
   5. Click on "Enable Automatic Deploys" and finally, click on "Deploy Branch".
 
 
----------------########### CONTINUE HERE #########----------------
-
 ## Credits 
 
 ### Inspiration
-- The first time I thought of building a web solution like Score! when, during an u-11 basketball match, the scoreboard was not working correctly and the audience had to keep track of the score by ourselves.
+- The MS DOS version of Carmen sandiego was one of my first experiences with videogames, and it holds a special place in my heart. As soon as I saw that the project was supposed to be a command-line based application, and that many other students had chosen to develop a game, Carmen Sandiego was the first thing that came to my head. I must admit that the development process has been more complicated than initially expected, the satisfaction of having a running version of this game is unmeasurable.
 
-- It would be foolish of me not to mention [scorecount.com](https://scorecount.com/) and [rapidtables.com](https://www.rapidtables.com/tools/scoreboard.html). They were an obvious reference for me (*"If I hd known they existed before starting with this project, I would have probably built something else..."* :-D)
-
-### Media
-- The colour palette was extracted using [Coolors](https://coolors.co).
-- The favicon was created using [Favicon](https://favicon.io).
-- The icons used for social media links were sourced from [Fontawesome](https://fontawesome.com).
+- [This](https://carmensandiego.fandom.com/wiki/Where_in_the_World_is_Carmen_Sandiego%3F_(1985)) site helped in refreshing my badly-maintained memory.
 
 ### Code
-- [freeCodeCamp](https://www.freecodecamp.org/) were a huge help in understanding responsive design, relative dimensions, and were my first camp years ago.
-- [Kevin Powell](https://www.kevinpowell.co/) CSS guru Kevin has changed the way I understand page layouts and keeps blowing my mind with his CSS videos on his [YouTube channel](https://youtube.com/kevinpowell). Hi 3-part "flexbox basics" playlist is a must-see for everyone (*"I wish I had seen this one before PP1"* XD).
-- [W3Schools](https://www.w3schools.com/) were constantly open on my browser. My go-to HTML and CSS site. Of special importance was this [Article](https://www.w3schools.com/w3css/w3css_modal.asp). It is a small piece on the site, but it opened up a world pf possibilities.
-- I cannot talk code without thanking Prof. David Malan and all the crew at HarvardX's [CS50X](https://cs50.harvard.edu/x/2023/)
-- [stack __overflow__](https://stackoverflow.com/) if you code, you know ;-). This [article](https://stackoverflow.com/questions/1735230/can-i-add-a-custom-attribute-to-an-html-tag) was a life saver in my struggle against the HTML validator. Also [this](https://stackoverflow.com/questions/13551899/how-to-show-a-label-only-to-screen-readers-web-accessiblity) helped in adapting the page to screen readers without impacting on its layout.
+
+- I cannot talk code without thanking Prof. David Malan and all the crew at HarvardX's [CS50X](https://cs50.harvard.edu/x/2023/).
+
+- [stack __overflow__](https://stackoverflow.com/) if you code, you know ;-). This [article](https://stackoverflow.com/questions/517970/how-to-clear-the-interpreter-console) was a godsend. Also [this](https://stackoverflow.com/questions/983354/how-do-i-wait-for-a-pressed-key).
+
+- [geeks for geeks](https://www.geeksforgeeks.org/) this [entry](https://www.geeksforgeeks.org/switch-case-in-python-replacement/) broke my heart so I decided to go with if-elif-else in loops. :-(
+
+- [patorjk](https://patorjk.com/) is where I created the title for the game (Text to ASCII Art Generator).
+
+- [realpython](https://realpython.com/python-main-function/) and [freeCodeCamp](https://www.freecodecamp.org/news/if-name-main-python-example/).
 
 ### Other
 - First and foremost, I owe gratitude to my family for dinners without me and days out I missed because I needed to sit and work on this project. Their support has always been unwavering.
