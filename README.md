@@ -88,6 +88,49 @@ The player is presented with the facts of the case and sent to the crime scene. 
     > See below flowchart with the outline of the game logic:
     ![Game Flowchart](/assets/media/pp3_diego_santacarmen_flowchart.jpg)
 
+ - ### __Helper Functions__
+  The below minions have been defined to add to the visual appeal of the game:
+
+  - clear()
+
+    ```
+    from os import system
+
+    def clear():
+        """
+        Clears the terminal.
+        See https://stackoverflow.com/questions/517970/how-to-clear-the-interpreter-console
+        """
+        system("clear")
+    ```
+
+
+  - t_print()
+    ```
+    def t_print(message):
+    """
+    Prints the passed string to the console, simulating a typewriter.
+    """
+    for char in message:
+        sleep(0.05)
+        print(char, end='', flush=True)
+    ```
+
+
+  - travel(origin, destination)
+    ```
+    def travel(origin, destination):
+    """
+    prints a sequence simulating the waiting time of a trip to the destination.
+    """
+    trip = [".         ", " .        ", "  .       ", "   .      ", "    .     ", "     .    ", "      .   ", "       .  ", "        . ", "         ."]
+    for i in range(10):
+        clear()
+        print(f"{origin}{trip[i]}{destination}")
+        sleep(0.3)
+        cursor.hide()
+    ```
+
 
 ## Future Development Opportunities
 
@@ -103,7 +146,24 @@ The player is presented with the facts of the case and sent to the crime scene. 
 
   - ### __Testing__
 
-    
+    - __PEP8__ The code has been submitted to the Code Institute PEP8 lint and all major issues were fixed. The ones that remain are due to strings being too long, or a character in a docstring that the lint recognizes erroneously as an escape character (L229). With regard to the strings length, it has been decided that they are to remain as is for design purposes.
+
+      ![PEP8](/assets/media/pep8.PNG)
+
+    - Every input request has been tested with blank and invalid inputs and they handle the data as expected.
+
+    - The game has been tested both in the IDE's and heroku's terminals and they perform as expected.
+
+  - ### __Known Issues__
+
+    - An issue has been identified with the locations' descriptions' lengths. A function may be defined to parse through the individual strings and place line breaks in intervals so the text does not wrap breaking words.
+
+    - When run on Heroku, the game title does is not cleared and users can scroll up in the terminal to see the game title. Since this does not disrupts the gameplay and remains almost inperceptible as an issue, ot has been decided to leave as-is.
+
+  - ### __Bugs__
+  No bugs have been found to remain in the code as presented.
+
+
 
 
 ---------------########### CONTINUE HERE #########----------------

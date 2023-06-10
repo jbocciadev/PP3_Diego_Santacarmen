@@ -64,8 +64,7 @@ def travel(origin, destination):
         print(f"{origin}{trip[i]}{destination}")
         sleep(0.3)
         cursor.hide()
-
-
+ 
 def load_cities():
     """
     Opens cities.csv file and returns list of dict elements with all cities in the file.
